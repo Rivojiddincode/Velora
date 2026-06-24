@@ -1,9 +1,11 @@
-import React from 'react'
+import "./AdminHeader.sass";
 
 const AdminHeader = () => {
   return (
-    <div>AdminHeader</div>
-  )
-}
+    <header className="admin-header">
+      Header
+    </header>
+  );
+};
 
-export default AdminHeader
+export default AdminHeader;

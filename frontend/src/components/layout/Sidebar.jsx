@@ -1,9 +1,11 @@
-import React from 'react'
+import "./Sidebar.sass";
 
 const Sidebar = () => {
   return (
-    <div>Sidebar</div>
-  )
-}
+    <aside className="sidebar">
+      Sidebar
+    </aside>
+  );
+};
 
-export default Sidebar
+export default Sidebar;
