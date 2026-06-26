@@ -12,6 +12,7 @@ const Sidebar = () => {
         loading="lazy"/>
         </div>
       </div>
+      <p>MAIN MENU</p>
       <NavLink
   to="/admin"
   end
