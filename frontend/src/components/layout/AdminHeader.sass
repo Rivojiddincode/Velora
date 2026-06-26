@@ -1,13 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+
+// ─── Tokens ───────────────────────────────────────────────
+$gold:        #D4AF37
+$gold-dim:    rgba(212, 175, 55, .12)
+$gold-focus:  rgba(212, 175, 55, .45)
+$gold-glow:   rgba(212, 175, 55, .08)
+$gold-blur:   rgba(212, 175, 55, .28)
+$bg:          #0A0A0A
+$text-bright: #F5F5F5
+$text-muted:  #7E7E87
+$input-bg:    rgba(255, 255, 255, .03)
+$font:        "Space Grotesk", sans-serif
+
+// ─── Header ───────────────────────────────────────────────
 .admin-header
   position: relative
   height: 70px
   display: flex
   align-items: center
-  padding: 0 20px
-
-  background: #0A0A0A
+  gap: 15px
+  padding: 0 30px
+  background: $bg
   overflow: hidden
+  font-family: $font
 
+  // Ambient glow orbs
   &::before,
   &::after
     content: ""
@@ -17,21 +34,78 @@
     border-radius: 50%
     filter: blur(90px)
     pointer-events: none
+    background: radial-gradient(circle, $gold-blur 0%, rgba(255, 255, 255, .10) 30%, transparent 75%)
 
-  
   &::before
     top: -180px
     left: -120px
-    background: radial-gradient(circle,
-      rgba(212,175,55,.28) 0%,
-      rgba(255,255,255,.10) 30%,
-      transparent 75%)
 
-  
   &::after
     top: -180px
     right: -120px
-    background: radial-gradient(circle,
-      rgba(212,175,55,.28) 0%,
-      rgba(255,255,255,.10) 30%,
-      transparent 75%)
+
+// ─── Breadcrumb ───────────────────────────────────────────
+.breadcrumb
+  position: relative
+  z-index: 10
+  display: flex
+  align-items: center
+  gap: 10px
+
+  &__root,
+  &__slash,
+  &__current
+    font-size: 18px
+    font-weight: 500
+    transition: color .3s
+
+  &__root
+    color: $text-bright
+
+  &__slash
+    color: $gold
+    font-weight: 400
+
+  &__current
+    color: $gold
+    font-weight: 600
+
+// ─── Search ───────────────────────────────────────────────
+.header-search
+  position: relative
+  z-index: 10
+  display: flex
+  align-items: center
+
+  &__icon
+    position: absolute
+    left: 16px
+    font-size: 17px
+    color: $text-muted
+    pointer-events: none
+    transition: color .3s
+
+  &__input
+    width: 320px
+    height: 44px
+    padding: 0 20px 0 44px
+    border: 1px solid $gold-dim
+    border-radius: 14px
+    outline: none
+    background: $input-bg
+    backdrop-filter: blur(14px)
+    color: $text-bright
+    font-size: 15px
+    font-family: $font
+    transition: border-color .35s, box-shadow .35s
+
+    &::placeholder
+      color: $text-muted
+
+    &:focus
+      border-color: $gold-focus
+      box-shadow: 0 0 0 3px $gold-glow
+
+    &:focus ~ .header-search__icon,
+    &:focus + .header-search__icon
+      color: $gold
