@@ -1,0 +1,94 @@
+// ✅ FIX: bu fayl yo'q edi — yaratildi
+
+.box
+  min-height: 100vh
+  display: flex
+  align-items: center
+  justify-content: center
+  background: #0A0A0A
+
+.cont
+  width: 400px
+  padding: 40px
+  background: rgba(255, 255, 255, .04)
+  border: 1px solid rgba(212, 175, 55, .12)
+  border-radius: 20px
+  backdrop-filter: blur(14px)
+
+  form
+    display: flex
+    flex-direction: column
+    gap: 18px
+
+    p
+      font-size: 24px
+      font-weight: 600
+      color: #F5F5F5
+      text-align: center
+      margin-bottom: 8px
+
+    label
+      display: flex
+      flex-direction: column
+      gap: 6px
+      font-size: 14px
+      color: #7E7E87
+
+    input
+      height: 44px
+      padding: 0 16px
+      border: 1px solid rgba(212, 175, 55, .12)
+      border-radius: 10px
+      background: rgba(255, 255, 255, .03)
+      color: #F5F5F5
+      font-size: 15px
+      outline: none
+      transition: border-color .3s
+
+      &::placeholder
+        color: #7E7E87
+
+      &:focus
+        border-color: rgba(212, 175, 55, .45)
+
+    button
+      height: 46px
+      border: none
+      border-radius: 10px
+      background: #D4AF37
+      color: #0A0A0A
+      font-size: 15px
+      font-weight: 600
+      cursor: pointer
+      transition: opacity .3s
+
+      &:hover
+        opacity: .85
+
+.divider
+  display: flex
+  align-items: center
+  gap: 12px
+  margin: 20px 0
+
+  &::before,
+  &::after
+    content: ""
+    flex: 1
+    height: 1px
+    background: rgba(212, 175, 55, .15)
+
+  span
+    font-size: 13px
+    color: #7E7E87
+
+.switch-link
+  text-align: center
+  font-size: 14px
+  color: #7E7E87
+  cursor: pointer
+
+  span
+    color: #D4AF37
+    font-weight: 600
+    margin-left: 6px

@@ -1,7 +1,7 @@
 import "./Sidebar.sass";
 import adminLogo from "../../assets/gggg.webp"
 import { NavLink } from "react-router-dom";
-import { RiHomeLine, RiShoppingBagLine, RiArrowRightSLine, RiFileList3Line, RiUser3Line,RiSettings4Line  } from "react-icons/ri";
+import { RiHomeLine, RiShoppingBagLine, RiArrowRightSLine, RiFileList3Line, RiUser3Line, RiSettings4Line, RiLogoutBoxRLine } from "react-icons/ri";
 const Sidebar = () => {
   return (
     <aside className="sidebar">
@@ -13,16 +13,17 @@ const Sidebar = () => {
         </div>
       </div>
       <p>MAIN MENU</p>
-      <NavLink
-  to="/admin"
-  end
-  className={({ isActive }) =>
-    isActive ? "nav-item active" : "nav-item"
-  }
->
-  <RiHomeLine />
-  <span>Dashboard</span>
-</NavLink>
+      <div className="navigation">
+        <NavLink
+          to="/admin"
+          end
+          className={({ isActive }) =>
+            isActive ? "nav-item active" : "nav-item"
+          }
+        >
+          <RiHomeLine />
+          <span>Dashboard</span>
+        </NavLink>
 
 <NavLink
   to="/admin/products"
@@ -60,10 +61,21 @@ const Sidebar = () => {
     isActive ? "nav-item active" : "nav-item"
   }
 >
-  < RiUser3Line />
+  <RiUser3Line />
   <span>Users</span>
- 
 </NavLink>
+      </div>
+
+      <div className="sidebar-footer">
+        <NavLink to="/" className="nav-item footer-item">
+          <RiHomeLine />
+          <span>Home Page</span>
+        </NavLink>
+        <NavLink to="/signin" className="nav-item footer-item">
+          <RiLogoutBoxRLine />
+          <span>Logout</span>
+        </NavLink>
+      </div>
     </aside>
   );
 };

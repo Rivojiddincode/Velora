@@ -1,14 +1,166 @@
-.admin-layout {
+﻿.admin-layout {
   display: flex;
   min-height: 100vh;
-  
+  background: #070707;
 }
+
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  background: #0b0b0b;
 }
+
 .admin-content {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
+  background: #0b0b0b;
+}
+
+.admin-page {
+  display: grid;
+  gap: 1.5rem;
+  color: #e5e7eb;
+}
+
+.page-header h1 {
+  margin-bottom: 0.4rem;
+  font-size: 2rem;
+  color: #f8fafc;
+}
+
+.page-header p {
+  color: #9ca3af;
+}
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.35rem;
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+}
+
+.metric-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: #9ca3af;
+}
+
+.metric-card h2 {
+  font-size: 1.85rem;
+  margin-bottom: 0.5rem;
+  color: #f8fafc;
+}
+
+.metric-change {
+  font-weight: 600;
+}
+
+.table-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 1.5rem;
+  backdrop-filter: blur(16px);
+}
+
+.section-header {
+  margin-bottom: 1rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem 0.75rem;
+  text-align: left;
+}
+
+.admin-table th {
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.admin-table tbody tr {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.admin-table td {
+  color: #e5e7eb;
+}
+
+.settings-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.settings-form label {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+.settings-form input[type="text"],
+.settings-form input[type="email"] {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f8fafc;
+}
+
+.checkbox-label {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  font-weight: 500;
+  color: #d1d5db;
+}
+
+.settings-form input[type="checkbox"] {
+  accent-color: #d4af37;
+}
+
+.success-message {
+  color: #d4af37;
+  margin-top: 0.5rem;
+}
+
+.admin-page .button-link,
+.admin-page .primary-button {
+  background: #d4af37;
+  color: #0b0b0b;
+}
+
+@media (max-width: 900px) {
+  .admin-content {
+    padding: 16px;
+  }
+
+  .dashboard-metrics,
+  .admin-table,
+  .settings-form {
+    width: 100%;
+  }
 }

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
+import AuthLayout from "../layouts/AuthLayout";
 
 // Client Pages
 import Home from "../pages/client/Home";
@@ -15,11 +16,19 @@ import Dashboard from "../pages/admin/Dashboard";
 import Products from "../pages/admin/Products";
 import Orders from "../pages/admin/Orders";
 import Settings from "../pages/admin/Settings";
-import Users from "../pages/admin/Users"; // 1. USERS SAHIFASINI IMPORT QILDIK
+import Users from "../pages/admin/Users";
+
+import SignIn from "../pages/auth/SignIn";
+import SignUp from "../pages/auth/SignUp";
 
 function AppRoutes() {
   return (
     <Routes>
+      <Route element={<AuthLayout />}>
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
+
       {/* Client */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
@@ -34,7 +43,7 @@ function AppRoutes() {
         <Route index element={<Dashboard />} />
         <Route path="products" element={<Products />} />
         <Route path="orders" element={<Orders />} />
-        <Route path="users" element={<Users />} /> {/* 2. USERS YO'LINI QO'SHDIK */}
+        <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>

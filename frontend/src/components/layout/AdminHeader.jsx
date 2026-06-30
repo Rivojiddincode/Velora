@@ -23,6 +23,7 @@ const AdminHeader = () => {
 
   return (
     <header className="admin-header">
+      <div className="vt">
       <div className="breadcrumb">
         <span className="breadcrumb__root">Dashboard</span>
         {!isDashboard && (
@@ -41,6 +42,7 @@ const AdminHeader = () => {
           placeholder="Search products, orders..."
         />
         <RiSearchLine className="header-search__icon" />
+      </div>
       </div>
     </header>
   );
