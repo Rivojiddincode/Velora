@@ -1,5 +1,6 @@
 ﻿import { Link } from "react-router-dom";
 import { products } from "../../services/productService";
+import "./Home.css";
 
 const Home = () => {
   const featuredProducts = products.slice(0, 4);

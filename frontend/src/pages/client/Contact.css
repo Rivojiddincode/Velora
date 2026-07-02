@@ -1,0 +1,42 @@
+/* Contact page styles */
+.contact-page .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.contact-page .contact-info h1,
+.contact-page .contact-form h1 {
+    margin-bottom: 0.75rem;
+}
+
+.contact-page .contact-details div {
+    margin-bottom: 0.75rem;
+}
+
+.contact-page .contact-form {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 1.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-page .contact-form input,
+.contact-page .contact-form textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e5e7eb;
+}
+
+.contact-page .primary-button {
+    margin-top: 1rem;
+    padding: 0.85rem 1.2rem;
+    border-radius: 12px;
+    background: #d4af37;
+    color: #0b0b0b;
+    border: none;
+}

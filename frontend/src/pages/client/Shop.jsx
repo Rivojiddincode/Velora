@@ -1,6 +1,7 @@
 ﻿import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { products } from "../../services/productService";
+import "./Shop.css";
 
 const Shop = () => {
   const [searchTerm, setSearchTerm] = useState("");
