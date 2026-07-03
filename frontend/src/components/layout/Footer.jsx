@@ -1,96 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './Footer.css';
-import { 
-  FiPhone, 
-  FiMail, 
+import {
+  FiPhone,
+  FiMail,
   FiMapPin,
   FiInstagram,
   FiFacebook,
-  FiTwitter
+  FiSend,
 } from 'react-icons/fi';
+import { getSettings } from '../../services/settingsService';
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const [settings, setSettings] = useState(null);
+
+  useEffect(() => {
+    getSettings().then(setSettings).catch(() => {});
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Footer Content */}
         <div className="footer-content">
-          
-          {/* Brand Section */}
           <div className="footer-section footer-brand">
-            <h3 className="footer-logo">Velora</h3>
+            <h3 className="footer-logo">{settings?.storeName || 'Velora'}</h3>
             <p className="footer-description">
-              Discover premium fashion and accessories for every lifestyle. Quality, comfort, and style in every collection.
+              Velora — zamonaviy, sifatli va uslubli kiyimlar uchun eng yaxshi tanlov.
             </p>
             <div className="footer-social">
-              <a href="#" className="social-link" aria-label="Instagram">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-link" aria-label="Instagram">
                 <FiInstagram />
               </a>
-              <a href="#" className="social-link" aria-label="Facebook">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-link" aria-label="Facebook">
                 <FiFacebook />
               </a>
-              <a href="#" className="social-link" aria-label="Twitter">
-                <FiTwitter />
+              <a href="https://t.me" target="_blank" rel="noreferrer" className="social-link" aria-label="Telegram">
+                <FiSend />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
           <div className="footer-section">
-            <h4 className="footer-section-title">Quick Links</h4>
+            <h4 className="footer-section-title">{t('home.categoriesTitle')}</h4>
             <ul className="footer-links">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/shop">Shop</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
-              <li><Link to="/signin">Sign In</Link></li>
+              <li><Link to="/">{t('nav.home')}</Link></li>
+              <li><Link to="/shop">{t('nav.shop')}</Link></li>
+              <li><Link to="/contact">{t('nav.contact')}</Link></li>
+              <li><Link to="/signin">{t('nav.signin')}</Link></li>
             </ul>
           </div>
 
-          {/* Customer Service */}
           <div className="footer-section">
-            <h4 className="footer-section-title">Customer Service</h4>
+            <h4 className="footer-section-title">{t('cart.checkout')}</h4>
             <ul className="footer-links">
-              <li><Link to="#">About Us</Link></li>
-              <li><Link to="#">Return Policy</Link></li>
-              <li><Link to="#">Shipping Info</Link></li>
-              <li><Link to="#">FAQ</Link></li>
+              <li><Link to="/cart">{t('nav.cart')}</Link></li>
+              <li><Link to="/shop">{t('shop.allProducts')}</Link></li>
             </ul>
+            <div className="payment-badge">inPAY {t('cart.payWithCard')}</div>
           </div>
 
-          {/* Contact Info */}
           <div className="footer-section">
-            <h4 className="footer-section-title">Contact Us</h4>
+            <h4 className="footer-section-title">{t('cart.name')}</h4>
             <div className="contact-info">
               <div className="contact-item">
                 <FiPhone className="contact-icon" />
-                <span>+1 (555) 123-4567</span>
+                <span>{settings?.phone || '+998 90 000 00 00'}</span>
               </div>
               <div className="contact-item">
                 <FiMail className="contact-icon" />
-                <span>support@velora.com</span>
+                <span>info@velora.uz</span>
               </div>
               <div className="contact-item">
                 <FiMapPin className="contact-icon" />
-                <span>New York, USA</span>
+                <span>{settings?.pickupAddress || "Toshkent sh."}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Divider */}
         <div className="footer-divider"></div>
 
-        {/* Footer Bottom */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © 2026 Velora Store. All rights reserved. | Modern shopping experience for everyone.
+            © 2026 {settings?.storeName || 'Velora'} Store. {t('footer.rights')}.
           </p>
-          <div className="footer-legal">
-            <Link to="#">Privacy Policy</Link>
-            <Link to="#">Terms & Conditions</Link>
-            <Link to="#">Cookie Policy</Link>
-          </div>
         </div>
       </div>
     </footer>

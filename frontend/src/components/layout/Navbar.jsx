@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { RiShoppingCart2Line } from 'react-icons/ri';
+import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
+import ThemeToggle from '../common/ThemeToggle';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
+  const { user, signout } = useAuth();
+  const { count } = useCart();
+  const navigate = useNavigate();
+
+  const handleSignout = () => {
+    signout();
+    navigate('/');
+  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
         <Link to="/" className="navbar-logo">
           <span className="logo-text">Velora</span>
         </Link>
 
-        {/* Hamburger Menu Icon */}
-        <div 
+        <div
           className={`hamburger ${isOpen ? 'active' : ''}`}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -23,33 +36,47 @@ const Navbar = () => {
           <span></span>
         </div>
 
-        {/* Navigation Links */}
         <ul className={`navbar-menu ${isOpen ? 'active' : ''}`}>
           <li className="navbar-item">
             <Link to="/" className="navbar-link" onClick={() => setIsOpen(false)}>
-              Home
+              {t('nav.home')}
             </Link>
           </li>
           <li className="navbar-item">
             <Link to="/shop" className="navbar-link" onClick={() => setIsOpen(false)}>
-              Shop
+              {t('nav.shop')}
             </Link>
           </li>
           <li className="navbar-item">
             <Link to="/contact" className="navbar-link" onClick={() => setIsOpen(false)}>
-              Contact
+              {t('nav.contact')}
             </Link>
           </li>
+          {user?.role === 'admin' && (
+            <li className="navbar-item">
+              <Link to="/admin" className="navbar-link" onClick={() => setIsOpen(false)}>
+                {t('nav.admin')}
+              </Link>
+            </li>
+          )}
         </ul>
 
-        {/* Action Buttons */}
         <div className="navbar-actions">
-          <Link to="/cart" className="navbar-btn navbar-btn-secondary">
-            Cart
+          <LanguageSwitcher />
+          <ThemeToggle />
+          <Link to="/cart" className="navbar-btn navbar-btn-secondary navbar-cart">
+            <RiShoppingCart2Line />
+            {count > 0 && <span className="cart-badge">{count}</span>}
           </Link>
-          <Link to="/signin" className="navbar-btn navbar-btn-primary">
-            Sign In
-          </Link>
+          {user ? (
+            <button type="button" className="navbar-btn navbar-btn-primary" onClick={handleSignout}>
+              {t('nav.signout')}
+            </button>
+          ) : (
+            <Link to="/signin" className="navbar-btn navbar-btn-primary">
+              {t('nav.signin')}
+            </Link>
+          )}
         </div>
       </div>
     </nav>

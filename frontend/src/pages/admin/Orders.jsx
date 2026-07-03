@@ -1,47 +1,80 @@
-﻿import React from "react";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { getAllOrders, updateOrderStatus } from "../../services/orderService";
 
-const orders = [
-  { id: "ORD-2001", customer: "Lina Hayes", total: "$235", status: "Delivered", date: "Jun 29" },
-  { id: "ORD-2002", customer: "Noah Diaz", total: "$98", status: "Processing", date: "Jun 29" },
-  { id: "ORD-2003", customer: "Kim Lee", total: "$179", status: "Cancelled", date: "Jun 28" },
-  { id: "ORD-2004", customer: "Mason Reed", total: "$54", status: "Pending", date: "Jun 27" },
-];
+const STATUSES = ["pending", "processing", "ready", "completed", "cancelled"];
 
 const Orders = () => {
+  const { t } = useTranslation();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = () => {
+    setLoading(true);
+    getAllOrders()
+      .then(setOrders)
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(load, []);
+
+  const handleStatusChange = async (id, status) => {
+    await updateOrderStatus(id, status);
+    load();
+  };
+
   return (
     <div className="admin-page orders-page">
       <div className="page-header">
-        <h1>Orders</h1>
-        <p>View and manage incoming orders placed by clients.</p>
+        <h1>{t("admin.orders")}</h1>
       </div>
 
       <section className="table-card">
         <div className="section-header">
-          <h2>Recent Orders</h2>
+          <h2>{t("admin.orders")}</h2>
         </div>
 
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Order</th>
-              <th>Customer</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.customer}</td>
-                <td>{order.total}</td>
-                <td>{order.status}</td>
-                <td>{order.date}</td>
+        {loading ? (
+          <p>...</p>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Mijoz</th>
+                <th>Telefon</th>
+                <th>Jami</th>
+                <th>To'lov</th>
+                <th>Status</th>
+                <th>Sana</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id.slice(-6).toUpperCase()}</td>
+                  <td>{order.customerName || order.user?.name}</td>
+                  <td>{order.customerPhone || order.user?.phone}</td>
+                  <td>{order.totalAmount?.toLocaleString()} so'm</td>
+                  <td>{order.paymentStatus}</td>
+                  <td>
+                    <select
+                      value={order.status}
+                      onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                    >
+                      {STATUSES.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
     </div>
   );

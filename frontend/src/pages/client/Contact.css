@@ -26,17 +26,30 @@
     width: 100%;
     padding: 0.85rem 1rem;
     margin-top: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--border-color);
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.04);
-    color: #e5e7eb;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    transition: border-color .25s, box-shadow .25s, background .25s;
+}
+
+.contact-page .contact-form input::placeholder,
+.contact-page .contact-form textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+.contact-page .contact-form input:focus,
+.contact-page .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 4px var(--input-bg-focus);
 }
 
 .contact-page .primary-button {
     margin-top: 1rem;
     padding: 0.85rem 1.2rem;
     border-radius: 12px;
-    background: #d4af37;
-    color: #0b0b0b;
+    background: var(--primary-gold);
+    color: var(--secondary-bg);
     border: none;
 }

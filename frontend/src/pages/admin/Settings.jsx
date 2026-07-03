@@ -1,97 +1,64 @@
-﻿import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { getSettings, updateSettings } from "../../services/settingsService";
 
 const Settings = () => {
-  const [settings, setSettings] = useState({
-    storeName: "Velora Store",
-    email: "support@velora.com",
-    currency: "USD",
-    shipping: "Free shipping over $50",
-    notifications: true,
-  });
+  const { t } = useTranslation();
+  const [settings, setSettings] = useState({ storeName: "", pickupAddress: "", phone: "" });
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getSettings()
+      .then(setSettings)
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setSettings((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const { name, value } = e.target;
+    setSettings((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await updateSettings(settings);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
-    console.log("Settings saved:", settings);
   };
+
+  if (loading) return <p>...</p>;
 
   return (
     <div className="admin-page settings-page">
       <div className="page-header">
-        <h1>Settings</h1>
-        <p>Update store preferences and default settings.</p>
+        <h1>{t("admin.settings")}</h1>
       </div>
 
       <section className="table-card settings-form-card">
         <div className="section-header">
-          <h2>Store Settings</h2>
+          <h2>{t("admin.settings")}</h2>
         </div>
 
         <form className="settings-form" onSubmit={handleSubmit}>
           <label>
-            Store Name
-            <input
-              type="text"
-              name="storeName"
-              value={settings.storeName}
-              onChange={handleChange}
-            />
+            Do'kon nomi
+            <input type="text" name="storeName" value={settings.storeName} onChange={handleChange} />
           </label>
 
           <label>
-            Contact Email
-            <input
-              type="email"
-              name="email"
-              value={settings.email}
-              onChange={handleChange}
-            />
+            Olib ketish manzili (pickup address)
+            <input type="text" name="pickupAddress" value={settings.pickupAddress} onChange={handleChange} />
           </label>
 
           <label>
-            Default Currency
-            <input
-              type="text"
-              name="currency"
-              value={settings.currency}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label>
-            Shipping Policy
-            <input
-              type="text"
-              name="shipping"
-              value={settings.shipping}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="notifications"
-              checked={settings.notifications}
-              onChange={handleChange}
-            />
-            Enable order notifications
+            Telefon
+            <input type="text" name="phone" value={settings.phone} onChange={handleChange} />
           </label>
 
           <button type="submit" className="primary-button">
-            Save Settings
+            {t("admin.save")}
           </button>
-          {saved && <p className="success-message">Settings saved successfully.</p>}
+          {saved && <p className="success-message">Saqlandi</p>}
         </form>
       </section>
     </div>

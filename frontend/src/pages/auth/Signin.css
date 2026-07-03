@@ -9,7 +9,7 @@
 
 .signin {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: var(--secondary-bg);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,13 +61,13 @@
 }
 
 .signin-card h1 {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 34px;
   margin-bottom: 8px;
 }
 
 .signin-card p {
-  color: #8d8d96;
+  color: var(--text-secondary);
   margin-bottom: 35px;
 }
 
@@ -83,7 +83,7 @@
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
-  color: #fff;
+  color: var(--text-primary);
   outline: none;
   transition: 0.3s;
   font-size: 15px;
@@ -95,7 +95,7 @@
 }
 
 .input-box input::placeholder {
-  color: #6f6f77;
+  color: var(--text-secondary);
 }
 
 .icon {
@@ -103,7 +103,7 @@
   left: 18px;
   top: 50%;
   transform: translateY(-50%);
-  color: #d4af37;
+  color: var(--primary-gold);
   font-size: 20px;
 }
 
@@ -112,7 +112,7 @@
   right: 18px;
   top: 50%;
   transform: translateY(-50%);
-  color: #d4af37;
+  color: var(--primary-gold);
   font-size: 20px;
   cursor: pointer;
 }
@@ -125,7 +125,7 @@
 }
 
 .signin-options label {
-  color: #b5b5bb;
+  color: var(--text-secondary);
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -133,7 +133,7 @@
 }
 
 .signin-options a {
-  color: #d4af37;
+  color: var(--primary-gold);
   text-decoration: none;
   font-size: 14px;
 }
@@ -143,8 +143,8 @@ button {
   height: 55px;
   border: none;
   border-radius: 14px;
-  background: #d4af37;
-  color: #111;
+  background: var(--primary-gold);
+  color: var(--secondary-bg);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -159,11 +159,20 @@ button:hover {
 .bottom-text {
   margin-top: 28px;
   text-align: center;
-  color: #9b9ba3;
+  color: var(--text-secondary);
 }
 
 .bottom-text a {
-  color: #d4af37;
+  color: var(--primary-gold);
   text-decoration: none;
   font-weight: 600;
+}
+.form-error {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
 }

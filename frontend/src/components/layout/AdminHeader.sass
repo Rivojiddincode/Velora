@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
 
 // ─── Tokens ───────────────────────────────────────────────
-$gold:        #D4AF37
-$gold-dim:    rgba(212, 175, 55, .12)
-$gold-focus:  rgba(212, 175, 55, .45)
-$gold-glow:   rgba(212, 175, 55, .08)
-$gold-blur:   rgba(212, 175, 55, .28)
-$bg:          #0A0A0A
+$gold: var(--primary-gold)
+$gold-dim: rgba(212, 175, 55, .12)
+$gold-focus: rgba(212, 175, 55, .45)
+$gold-glow: rgba(212, 175, 55, .08)
+$gold-blur: rgba(212, 175, 55, .28)
+$bg: var(--secondary-bg)
 $text-bright: #F5F5F5
-$text-muted:  #7E7E87
-$input-bg:    rgba(255, 255, 255, .03)
-$font:        "Space Grotesk", sans-serif
+$text-muted: var(--text-secondary)
+$input-bg: rgba(255, 255, 255, .03)
+$font: "Space Grotesk", sans-serif
 
 // ─── Header ───────────────────────────────────────────────
 .admin-header
@@ -22,11 +22,14 @@ $font:        "Space Grotesk", sans-serif
   gap: 15px
   padding: 0 30px
   background: $bg
-  overflow: hidden
+  border-bottom: 1px solid var(--border-color)
+  overflow: visible
   font-family: $font
   .vt
     display: flex
     gap: 15px
+    min-width: 0
+    flex-wrap: wrap
 
   // Ambient glow orbs
   &::before,
@@ -56,6 +59,19 @@ $font:        "Space Grotesk", sans-serif
   align-items: center
   gap: 10px
 
+.header-logo
+  width: 36px
+  height: 36px
+  border-radius: 50%
+  background: $gold
+  display: flex
+  align-items: center
+  justify-content: center
+  color: #fff
+  font-weight: 700
+  font-size: 16px
+  margin-right: 6px
+
   &__root,
   &__slash,
   &__current
@@ -64,7 +80,7 @@ $font:        "Space Grotesk", sans-serif
     transition: color .3s
 
   &__root
-    color: $text-bright
+    color: var(--text-primary)
 
   &__slash
     color: $gold
@@ -80,6 +96,7 @@ $font:        "Space Grotesk", sans-serif
   z-index: 10
   display: flex
   align-items: center
+  min-width: 0
 
   &__icon
     position: absolute
@@ -91,6 +108,7 @@ $font:        "Space Grotesk", sans-serif
 
   &__input
     width: 320px
+    max-width: 100%
     height: 44px
     padding: 0 20px 0 44px
     border: 1px solid $gold-dim
@@ -113,3 +131,10 @@ $font:        "Space Grotesk", sans-serif
     &:focus ~ .header-search__icon,
     &:focus + .header-search__icon
       color: $gold
+
+.header-right
+  display: flex
+  align-items: center
+  gap: 0.75rem
+  min-width: 0
+  flex-wrap: wrap

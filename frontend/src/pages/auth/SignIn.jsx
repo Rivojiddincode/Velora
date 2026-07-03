@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { RiEyeLine, RiEyeOffLine, RiMailLine, RiLockLine } from "react-icons/ri";
+import { useAuth } from "../../context/AuthContext";
 import "./SignIn.css";
 
 const SignIn = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t } = useTranslation();
+  const { signin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -20,84 +26,68 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
-
-    // Backendga ulaganda:
-    // axios.post("/api/auth/login", formData)
+    setError("");
+    setLoading(true);
+    try {
+      const user = await signin(formData);
+      const redirectTo = location.state?.from || (user.role === "admin" ? "/admin" : "/");
+      navigate(redirectTo, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message || "Xatolik yuz berdi");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="signin">
       <div className="signin-card">
+        <h1>{t("auth.signin")}</h1>
+        <p>{t("auth.loginRequired")}</p>
 
-        <h1>Welcome Back</h1>
-        <p>Sign in to continue to Velora Admin.</p>
+        {error && <div className="form-error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-
           <div className="input-box">
             <RiMailLine className="icon" />
-
             <input
               type="email"
               name="email"
-              placeholder="Email address"
+              placeholder={t("auth.email")}
               value={formData.email}
               onChange={handleChange}
+              required
             />
           </div>
 
           <div className="input-box">
             <RiLockLine className="icon" />
-
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder={t("auth.password")}
               value={formData.password}
               onChange={handleChange}
+              required
             />
-
             {showPassword ? (
-              <RiEyeOffLine
-                className="eye"
-                onClick={() => setShowPassword(false)}
-              />
+              <RiEyeOffLine className="eye" onClick={() => setShowPassword(false)} />
             ) : (
-              <RiEyeLine
-                className="eye"
-                onClick={() => setShowPassword(true)}
-              />
+              <RiEyeLine className="eye" onClick={() => setShowPassword(true)} />
             )}
           </div>
 
-          <div className="signin-options">
-
-            <label>
-              <input type="checkbox" />
-              Remember me
-            </label>
-
-            <Link to="/forgot-password">
-              Forgot password?
-            </Link>
-
-          </div>
-
-          <button onClick={()=>navigate("../client/Home.jsx") } type="submit">
-            Sign In
+          <button type="submit" disabled={loading}>
+            {loading ? "..." : t("auth.signin")}
           </button>
-
         </form>
 
         <div className="bottom-text">
-          Don't have an account?
-          <Link to="/signup"> Sign Up</Link>
+          {t("auth.noAccount")}
+          <Link to="/signup"> {t("auth.signup")}</Link>
         </div>
-
       </div>
     </div>
   );

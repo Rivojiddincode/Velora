@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-// ✅ FIX: fayl bo'sh edi — routelar ulandi
-const { signup, signin } = require("../controllers/auth.controller");
+const { signup, signin, me } = require("../controllers/auth.controller");
+const authMiddleware = require("../middleware/auth.middleware");
 
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.get("/me", authMiddleware, me);
 
 module.exports = router;

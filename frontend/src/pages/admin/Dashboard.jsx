@@ -1,25 +1,38 @@
-﻿import React from "react";
-
-const metrics = [
-  { label: "Total Sales", value: "$12,480", change: "+14%", color: "#10b981" },
-  { label: "Total Orders", value: "248", change: "+9%", color: "#2563eb" },
-  { label: "Products", value: "72", change: "+4%", color: "#f59e0b" },
-  { label: "Active Users", value: "1,320", change: "+12%", color: "#ec4899" },
-];
-
-const recentOrders = [
-  { id: "ORD-1001", customer: "Sara Patel", total: "$248", status: "Delivered", date: "Jun 28" },
-  { id: "ORD-1002", customer: "James Fox", total: "$149", status: "Processing", date: "Jun 28" },
-  { id: "ORD-1003", customer: "Mia Khan", total: "$92", status: "Pending", date: "Jun 27" },
-  { id: "ORD-1004", customer: "Ethan Bell", total: "$324", status: "Delivered", date: "Jun 26" },
-];
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { getAllOrders } from "../../services/orderService";
+import { getProducts } from "../../services/productService";
+import { getUsers } from "../../services/userService";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
+  const [orders, setOrders] = useState([]);
+  const [productsCount, setProductsCount] = useState(0);
+  const [usersCount, setUsersCount] = useState(0);
+
+  useEffect(() => {
+    getAllOrders().then(setOrders).catch(() => {});
+    getProducts({ limit: 1 }).then((data) => setProductsCount(data.total)).catch(() => {});
+    getUsers().then((u) => setUsersCount(u.length)).catch(() => {});
+  }, []);
+
+  const totalSales = orders
+    .filter((o) => o.paymentStatus === "paid")
+    .reduce((sum, o) => sum + o.totalAmount, 0);
+
+  const metrics = [
+    { label: "Sotuv (paid)", value: `${totalSales.toLocaleString()} so'm`, color: "var(--success)" },
+    { label: t("admin.orders"), value: orders.length, color: "#2563eb" },
+    { label: t("admin.products"), value: productsCount, color: "var(--primary-gold)" },
+    { label: t("admin.users"), value: usersCount, color: "#ec4899" },
+  ];
+
+  const recentOrders = orders.slice(0, 6);
+
   return (
     <div className="admin-page dashboard-page">
       <div className="page-header">
-        <h1>Dashboard</h1>
-        <p>Overview of sales, orders, and product performance.</p>
+        <h1>{t("admin.dashboard")}</h1>
       </div>
 
       <div className="dashboard-metrics">
@@ -27,36 +40,32 @@ const Dashboard = () => {
           <div key={metric.label} className="metric-card">
             <span className="metric-label">{metric.label}</span>
             <h2>{metric.value}</h2>
-            <span className="metric-change" style={{ color: metric.color }}>
-              {metric.change}
-            </span>
           </div>
         ))}
       </div>
 
       <section className="table-card">
         <div className="section-header">
-          <h2>Recent Orders</h2>
-          <p>Latest orders coming through the store.</p>
+          <h2>{t("admin.orders")}</h2>
         </div>
         <table className="admin-table">
           <thead>
             <tr>
-              <th>Order</th>
-              <th>Customer</th>
-              <th>Total</th>
+              <th>ID</th>
+              <th>Mijoz</th>
+              <th>Jami</th>
               <th>Status</th>
-              <th>Date</th>
+              <th>Sana</th>
             </tr>
           </thead>
           <tbody>
             {recentOrders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.customer}</td>
-                <td>{order.total}</td>
+              <tr key={order._id}>
+                <td>{order._id.slice(-6).toUpperCase()}</td>
+                <td>{order.customerName || order.user?.name}</td>
+                <td>{order.totalAmount?.toLocaleString()} so'm</td>
                 <td>{order.status}</td>
-                <td>{order.date}</td>
+                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

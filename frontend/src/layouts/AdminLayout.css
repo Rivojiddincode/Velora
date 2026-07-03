@@ -1,36 +1,43 @@
 ﻿.admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #070707;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--secondary-bg);
 }
 
 .admin-main {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  background: #0b0b0b;
+  overflow-x: hidden;
+  background: var(--secondary-bg);
 }
 
 .admin-content {
+  min-width: 0;
   flex: 1;
   padding: 24px;
-  background: #0b0b0b;
+  overflow-x: hidden;
+  background: var(--secondary-bg);
 }
 
 .admin-page {
   display: grid;
   gap: 1.5rem;
-  color: #e5e7eb;
+  color: var(--text-primary);
 }
 
 .page-header h1 {
   margin-bottom: 0.4rem;
   font-size: 2rem;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .page-header p {
-  color: #9ca3af;
+  color: var(--text-secondary);
 }
 
 .dashboard-metrics {
@@ -50,13 +57,13 @@
 .metric-label {
   display: block;
   margin-bottom: 0.75rem;
-  color: #9ca3af;
+  color: var(--text-secondary);
 }
 
 .metric-card h2 {
   font-size: 1.85rem;
   margin-bottom: 0.5rem;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .metric-change {
@@ -69,6 +76,9 @@
   border-radius: 24px;
   padding: 1.5rem;
   backdrop-filter: blur(16px);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-width: 100%;
 }
 
 .section-header {
@@ -77,18 +87,32 @@
 
 .admin-table {
   width: 100%;
+  min-width: 0;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0 0.5rem;
+  overflow-wrap: anywhere;
 }
 
 .admin-table th,
 .admin-table td {
   padding: 1rem 0.75rem;
   text-align: left;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.admin-table td img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .admin-table th {
-  color: #9ca3af;
+  color: var(--text-secondary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -105,7 +129,7 @@
 }
 
 .admin-table td {
-  color: #e5e7eb;
+  color: var(--text-primary);
 }
 
 .settings-form {
@@ -127,7 +151,7 @@
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .checkbox-label {
@@ -139,18 +163,18 @@
 }
 
 .settings-form input[type="checkbox"] {
-  accent-color: #d4af37;
+  accent-color: var(--primary-gold);
 }
 
 .success-message {
-  color: #d4af37;
+  color: var(--primary-gold);
   margin-top: 0.5rem;
 }
 
 .admin-page .button-link,
 .admin-page .primary-button {
-  background: #d4af37;
-  color: #0b0b0b;
+  background: var(--primary-gold);
+  color: var(--secondary-bg);
 }
 
 @media (max-width: 900px) {

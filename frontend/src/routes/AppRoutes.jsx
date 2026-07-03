@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import AuthLayout from "../layouts/AuthLayout";
+import ProtectedRoute from "../components/common/ProtectedRoute";
+import AdminRoute from "../components/common/AdminRoute";
 
 // Client Pages
 import Home from "../pages/client/Home";
@@ -17,6 +19,7 @@ import Products from "../pages/admin/Products";
 import Orders from "../pages/admin/Orders";
 import Settings from "../pages/admin/Settings";
 import Users from "../pages/admin/Users";
+import Categories from "../pages/admin/Categories";
 
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
@@ -29,22 +32,28 @@ function AppRoutes() {
         <Route path="/signup" element={<SignUp />} />
       </Route>
 
-      {/* Client */}
+      {/* Client — Home is public, everything else requires sign in */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/contact" element={<Contact />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<Contact />} />
+        </Route>
       </Route>
 
       {/* Admin */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="products" element={<Products />} />
-        <Route path="orders" element={<Orders />} />
-        <Route path="users" element={<Users />} />
-        <Route path="settings" element={<Settings />} />
+      <Route element={<AdminRoute />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="products" element={<Products />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="users" element={<Users />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
       </Route>
     </Routes>
   );

@@ -1,14 +1,26 @@
 import "./Sidebar.sass";
 import adminLogo from "../../assets/gggg.webp"
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { RiHomeLine, RiShoppingBagLine, RiArrowRightSLine, RiFileList3Line, RiUser3Line, RiSettings4Line, RiLogoutBoxRLine } from "react-icons/ri";
+import { useAuth } from "../../context/AuthContext";
+
 const Sidebar = () => {
+  const { t } = useTranslation();
+  const { signout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    signout();
+    navigate("/");
+  };
+
   return (
     <aside className="sidebar">
       <div className="logo">
         <div className="logo-wrapper">
-        <img src={adminLogo} 
-        alt="adminLogo" 
+        <img src={adminLogo}
+        alt="adminLogo"
         loading="lazy"/>
         </div>
       </div>
@@ -22,7 +34,7 @@ const Sidebar = () => {
           }
         >
           <RiHomeLine />
-          <span>Dashboard</span>
+          <span>{t("admin.dashboard")}</span>
         </NavLink>
 
 <NavLink
@@ -32,7 +44,7 @@ const Sidebar = () => {
   }
 >
   <RiShoppingBagLine />
-  <span>Products</span>
+  <span>{t("admin.products")}</span>
   <RiArrowRightSLine className="arrow" />
 </NavLink>
 <NavLink
@@ -42,8 +54,8 @@ const Sidebar = () => {
   }
 >
   <RiFileList3Line />
-  <span>Orders</span>
- 
+  <span>{t("admin.orders")}</span>
+
 </NavLink>
 <NavLink
   to="/admin/settings"
@@ -52,8 +64,8 @@ const Sidebar = () => {
   }
 >
   <RiSettings4Line />
-  <span>Settings</span>
- 
+  <span>{t("admin.settings")}</span>
+
 </NavLink>
 <NavLink
   to="/admin/users"
@@ -62,19 +74,19 @@ const Sidebar = () => {
   }
 >
   <RiUser3Line />
-  <span>Users</span>
+  <span>{t("admin.users")}</span>
 </NavLink>
       </div>
 
       <div className="sidebar-footer">
         <NavLink to="/" className="nav-item footer-item">
           <RiHomeLine />
-          <span>Home Page</span>
+          <span>{t("nav.home")}</span>
         </NavLink>
-        <NavLink to="/signin" className="nav-item footer-item">
+        <button type="button" className="nav-item footer-item" onClick={handleLogout}>
           <RiLogoutBoxRLine />
-          <span>Logout</span>
-        </NavLink>
+          <span>{t("nav.signout")}</span>
+        </button>
       </div>
     </aside>
   );

@@ -1,47 +1,88 @@
-﻿import React from "react";
-
-const users = [
-  { id: "U-3001", name: "Amelia Ross", email: "amelia.ross@example.com", role: "Admin", status: "Active" },
-  { id: "U-3002", name: "Oliver James", email: "oliver.james@example.com", role: "Editor", status: "Active" },
-  { id: "U-3003", name: "Chloe Grant", email: "chloe.grant@example.com", role: "Customer", status: "Blocked" },
-  { id: "U-3004", name: "Leo Kim", email: "leo.kim@example.com", role: "Customer", status: "Active" },
-];
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { getUsers, deleteUser, updateUserRole } from "../../services/userService";
+import { useAuth } from "../../context/AuthContext";
 
 const Users = () => {
+  const { t } = useTranslation();
+  const { user: currentUser } = useAuth();
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = () => {
+    setLoading(true);
+    getUsers()
+      .then(setUsers)
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(load, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Foydalanuvchini o'chirishni tasdiqlaysizmi?")) return;
+    await deleteUser(id);
+    load();
+  };
+
+  const handleRoleChange = async (id, role) => {
+    await updateUserRole(id, role);
+    load();
+  };
+
   return (
     <div className="admin-page users-page">
       <div className="page-header">
-        <h1>Users</h1>
-        <p>Manage store users, roles, and account statuses.</p>
+        <h1>{t("admin.users")}</h1>
       </div>
 
       <section className="table-card">
         <div className="section-header">
-          <h2>Account List</h2>
+          <h2>{t("admin.users")}</h2>
         </div>
 
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>{user.status}</td>
+        {loading ? (
+          <p>...</p>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Ism</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Rol</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u._id}>
+                  <td>{u.name}</td>
+                  <td>{u.email}</td>
+                  <td>{u.phone}</td>
+                  <td>
+                    <select
+                      value={u.role}
+                      onChange={(e) => handleRoleChange(u._id, e.target.value)}
+                      disabled={u._id === currentUser?.id}
+                    >
+                      <option value="user">user</option>
+                      <option value="admin">admin</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button
+                      className="text-button"
+                      onClick={() => handleDelete(u._id)}
+                      disabled={u._id === currentUser?.id}
+                    >
+                      {t("admin.delete")}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
     </div>
   );

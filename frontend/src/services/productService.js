@@ -1,51 +1,50 @@
-export const products = [
-  {
-    id: "1",
-    name: "Classic Leather Bag",
-    category: "Bags",
-    price: 120,
-    description:
-      "A soft handcrafted leather bag for everyday use, with a spacious interior and durable hardware.",
-    image: "https://via.placeholder.com/520x380?text=Leather+Bag",
-  },
-  {
-    id: "2",
-    name: "Sport Sneakers",
-    category: "Shoes",
-    price: 85,
-    description:
-      "Lightweight sneakers built for comfort and style, perfect for city walks and gym sessions.",
-    image: "https://via.placeholder.com/520x380?text=Sport+Sneakers",
-  },
-  {
-    id: "3",
-    name: "Minimal Wristwatch",
-    category: "Accessories",
-    price: 150,
-    description:
-      "A minimal watch with a clean dial and leather strap, designed for both casual and formal wear.",
-    image: "https://via.placeholder.com/520x380?text=Wristwatch",
-  },
-  {
-    id: "4",
-    name: "Denim Jacket",
-    category: "Clothing",
-    price: 95,
-    description:
-      "Classic denim jacket with modern tailoring and comfortable stretch fabric.",
-    image: "https://via.placeholder.com/520x380?text=Denim+Jacket",
-  },
-  {
-    id: "5",
-    name: "Travel Backpack",
-    category: "Bags",
-    price: 110,
-    description:
-      "A rugged travel backpack with multiple compartments, water-resistant fabric, and ergonomic straps.",
-    image: "https://via.placeholder.com/520x380?text=Travel+Backpack",
-  },
-];
+import api from "../api/axios";
 
-export const getProducts = () => products;
+// filters: { category, ageGroup, minPrice, maxPrice, colors, sizes, search, sort, page, limit }
+// javob: { items, total, page, totalPages }
+export const getProducts = async (filters = {}) => {
+  const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== "" && v != null));
+  const { data } = await api.get("/products", { params });
+  return data;
+};
 
-export const getProductById = (id) => products.find((product) => product.id === id);
+export const getProductFilters = async () => {
+  const { data } = await api.get("/products/filters");
+  return data;
+};
+
+export const getProductById = async (id) => {
+  const { data } = await api.get(`/products/${id}`);
+  return data;
+};
+
+export const createProduct = async (formData) => {
+  const { data } = await api.post("/products", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
+};
+
+export const updateProduct = async (id, formData) => {
+  const { data } = await api.put(`/products/${id}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
+};
+
+export const deleteProduct = async (id) => {
+  const { data } = await api.delete(`/products/${id}`);
+  return data;
+};
+
+export const resolveImageUrl = (image) => {
+  if (!image) return "https://placehold.co/520x380?text=Velora";
+  if (image.startsWith("http")) return image;
+  const base = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace("/api", "");
+  return `${base}${image}`;
+};
+
+export const resolveImages = (product) => {
+  const list = product?.images?.length ? product.images : [product?.image];
+  return list.filter(Boolean).map(resolveImageUrl);
+};

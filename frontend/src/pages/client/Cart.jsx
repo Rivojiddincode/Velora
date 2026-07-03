@@ -1,106 +1,138 @@
-﻿import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { getSettings } from "../../services/settingsService";
+import { createOrder, createPayment } from "../../services/orderService";
 import "./Cart.css";
 
-const initialCart = [
-  {
-    id: "1",
-    name: "Classic Leather Bag",
-    price: 120,
-    quantity: 1,
-  },
-  {
-    id: "2",
-    name: "Sport Sneakers",
-    price: 85,
-    quantity: 2,
-  },
-];
-
 const Cart = () => {
-  const [cartItems, setCartItems] = useState(initialCart);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { items, updateQuantity, removeFromCart, clearCart, total } = useCart();
 
-  const total = useMemo(
-    () => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    [cartItems]
-  );
+  const [pickupAddress, setPickupAddress] = useState("");
+  const [customerName, setCustomerName] = useState(user?.name || "");
+  const [customerPhone, setCustomerPhone] = useState(user?.phone || "");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleQuantityChange = (id, value) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, Number(value)) }
-          : item
-      )
-    );
-  };
+  useEffect(() => {
+    getSettings()
+      .then((s) => setPickupAddress(s.pickupAddress))
+      .catch(() => setPickupAddress(""));
+  }, []);
 
-  const handleRemove = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
+  const handleCheckout = async () => {
+    setError("");
+    if (!customerName || !customerPhone) {
+      setError(t("cart.name") + " / " + t("cart.phone"));
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const order = await createOrder({
+        items: items.map((i) => ({
+          product: i._id,
+          name: i.name,
+          image: i.image,
+          price: i.price,
+          quantity: i.quantity,
+        })),
+        totalAmount: total,
+        pickupAddress,
+        customerName,
+        customerPhone,
+        paymentMethod: "card",
+      });
+
+      const payment = await createPayment(order._id);
+      clearCart();
+
+      if (payment.paymentUrl) {
+        window.location.href = payment.paymentUrl;
+      } else {
+        navigate("/", { state: { orderPlaced: true } });
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Xatolik yuz berdi");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="cart-page">
-      <h1>Your Cart</h1>
+      <h1>{t("cart.title")}</h1>
 
-      {cartItems.length === 0 ? (
+      {items.length === 0 ? (
         <div className="empty-state">
-          <p>Your cart is empty.</p>
+          <p>{t("cart.empty")}</p>
           <Link to="/shop" className="button-link">
-            Continue Shopping
+            {t("shop.title")}
           </Link>
         </div>
       ) : (
         <div className="cart-layout">
-          <table className="cart-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>${item.price}</td>
-                  <td>
+          <div className="cart-items">
+            {items.map((item) => (
+              <article className="cart-item-card" key={item._id}>
+                <img src={item.image} alt={item.name} />
+                <div className="cart-item-details">
+                  <div className="cart-item-header">
+                    <h3>{item.name}</h3>
+                    <span className="item-price">{item.price?.toLocaleString()} so'm</span>
+                  </div>
+                  <label className="quantity-label">
+                    {t("cart.quantity") || "Soni"}
                     <input
                       type="number"
                       min="1"
                       value={item.quantity}
-                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                      onChange={(e) => updateQuantity(item._id, Number(e.target.value))}
                     />
-                  </td>
-                  <td>${item.price * item.quantity}</td>
-                  <td>
-                    <button onClick={() => handleRemove(item.id)} className="text-button">
-                      Remove
+                  </label>
+                  <div className="cart-item-footer">
+                    <span className="item-total">{(item.price * item.quantity).toLocaleString()} so'm</span>
+                    <button onClick={() => removeFromCart(item._id)} className="text-button">
+                      {t("cart.remove")}
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
 
           <aside className="cart-summary">
-            <h2>Order Summary</h2>
+            <h2>{t("cart.checkout")}</h2>
+
             <div className="summary-row">
-              <span>Subtotal</span>
-              <strong>${total}</strong>
+              <span>{t("cart.total")}</span>
+              <strong>{total.toLocaleString()} so'm</strong>
             </div>
-            <div className="summary-row">
-              <span>Shipping</span>
-              <strong>Free</strong>
+
+            <div className="pickup-box">
+              <span className="text-muted">{t("cart.pickup")}</span>
+              <p>{pickupAddress || "..."}</p>
             </div>
-            <div className="summary-row total-row">
-              <span>Total</span>
-              <strong>${total}</strong>
-            </div>
-            <button className="primary-button">Proceed to Checkout</button>
+
+            <label className="checkout-field">
+              {t("cart.name")}
+              <input value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+            </label>
+
+            <label className="checkout-field">
+              {t("cart.phone")}
+              <input value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} placeholder="+998 90 000 00 00" />
+            </label>
+
+            {error && <div className="form-error">{error}</div>}
+
+            <button className="primary-button" onClick={handleCheckout} disabled={submitting}>
+              {submitting ? "..." : t("cart.payWithCard")}
+            </button>
           </aside>
         </div>
       )}
