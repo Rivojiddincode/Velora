@@ -6,10 +6,15 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(15, 15, 15, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--navbar-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     padding: 1rem 0;
+}
+
+[data-theme="dark"] .navbar {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-container {
@@ -70,7 +75,7 @@
 
 .navbar-link {
     position: relative;
-    color: var(--text-primary);
+    color: var(--navbar-text);
     font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
@@ -135,13 +140,14 @@
 }
 
 .navbar-btn-secondary {
-    background: transparent;
+    background: var(--card-bg);
     color: var(--primary-gold);
-    border: 1.5px solid var(--primary-gold);
+    border: 1.5px solid var(--border-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .navbar-btn-secondary:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: var(--card-bg-hover);
     transform: translateY(-2px);
 }
 
@@ -199,9 +205,10 @@
         right: 0;
         flex-direction: column;
         gap: 0;
-        background: rgba(15, 15, 15, 0.98);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--navbar-menu-bg);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
@@ -216,7 +223,7 @@
 
     .navbar-item {
         width: 100%;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .navbar-link {
@@ -230,7 +237,7 @@
     }
 
     .navbar-link:hover {
-        background: rgba(212, 175, 55, 0.1);
+        background: var(--card-bg-hover);
         padding-left: 2rem;
     }
 
@@ -243,8 +250,8 @@
         width: 100%;
         gap: 0.5rem;
         padding: 1rem;
-        background: rgba(15, 15, 15, 0.98);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--navbar-menu-bg);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .navbar-menu.active~.navbar-actions {
@@ -310,6 +317,9 @@
   height: 38px;
   padding: 0 !important;
   font-size: 1.2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--navbar-text);
 }
 
 .cart-badge {
