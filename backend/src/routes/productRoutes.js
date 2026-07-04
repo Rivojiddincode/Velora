@@ -40,16 +40,7 @@ router.get("/filters", async (req, res) => {
     ]);
 
     res.json({
-      categories: (() => {
-        const list = categories.map((c) => ({ name: c._id, count: c.count }));
-        // Ensure common age/category buckets are available in sidebar even if empty
-        const required = ["Ayollar", "Bolalar"];
-        const names = new Set(list.map((l) => l.name));
-        required.forEach((r) => {
-          if (!names.has(r)) list.push({ name: r, count: 0 });
-        });
-        return list;
-      })(),
+      categories: categories.map((c) => ({ name: c._id, count: c.count })),
       ageGroups: ageGroups.map((a) => ({ name: a._id, count: a.count })),
       colors: colorsAgg.map((c) => c._id),
       priceMin: priceStats[0]?.min || 0,
@@ -73,6 +64,7 @@ router.get("/", async (req, res) => {
       sizes,
       search,
       sort,
+      featured,
       page = 1,
       limit = 12,
     } = req.query;
@@ -80,6 +72,7 @@ router.get("/", async (req, res) => {
     const filter = {};
     if (category) filter.category = category;
     if (ageGroup) filter.ageGroup = ageGroup;
+    if (featured === "true") filter.featured = true;
     if (minPrice || maxPrice) {
       filter.price = {};
       if (minPrice) filter.price.$gte = Number(minPrice);

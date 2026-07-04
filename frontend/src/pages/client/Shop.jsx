@@ -13,6 +13,7 @@ import {
 } from "react-icons/ri";
 import { getProducts, getProductFilters, resolveImageUrl } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
 import "./Shop.css";
 
 const SIZE_OPTIONS = ["S", "M", "L", "XL", "XXL"];
@@ -20,6 +21,7 @@ const SIZE_OPTIONS = ["S", "M", "L", "XL", "XXL"];
 const Shop = () => {
   const { t } = useTranslation();
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
 
   const [searchParams] = useSearchParams();
   const [meta, setMeta] = useState({ categories: [], ageGroups: [], colors: [], priceMin: 0, priceMax: 0, total: 0 });
@@ -27,7 +29,6 @@ const Shop = () => {
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [wishlist, setWishlist] = useState(new Set());
 
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState(searchParams.get("category") || "");
@@ -87,14 +88,6 @@ const Shop = () => {
 
   const toggleSize = (size) => {
     setSelectedSizes((prev) => (prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]));
-  };
-
-  const toggleWishlist = (id) => {
-    setWishlist((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
   };
 
   const resetFilters = () => {
@@ -264,9 +257,18 @@ const Shop = () => {
                   <button
                     type="button"
                     className="wishlist-heart"
-                    onClick={() => toggleWishlist(product._id)}
+                    onClick={() =>
+                      toggleWishlist({
+                        _id: product._id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        category: product.category,
+                        brand: product.brand,
+                      })
+                    }
                   >
-                    {wishlist.has(product._id) ? <RiHeartFill className="filled" /> : <RiHeartLine />}
+                    {isWishlisted(product._id) ? <RiHeartFill className="filled" /> : <RiHeartLine />}
                   </button>
                 </div>
                 <div className="product-card-body">
@@ -299,6 +301,10 @@ const Shop = () => {
                           name: product.name,
                           price: product.price,
                           image: resolveImageUrl(product.image),
+                          brand: product.brand,
+                          category: product.category,
+                          rating: product.rating,
+                          reviewsCount: product.reviewsCount,
                         })
                       }
                       disabled={product.stock === 0}

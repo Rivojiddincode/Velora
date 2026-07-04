@@ -17,6 +17,7 @@ import {
 } from "react-icons/ri";
 import { getProducts, getProductFilters, resolveImageUrl } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
 import "./Home.css";
 
 const CATEGORY_IMAGES = [
@@ -26,18 +27,33 @@ const CATEGORY_IMAGES = [
   "https://images.unsplash.com/photo-1560243563-062bfc001d68?w=500&q=80",
 ];
 
+const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=900&q=80",
+  "https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=900&q=80",
+  "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=80",
+  "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=900&q=80",
+];
+
 const Home = () => {
   const { t } = useTranslation();
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
 
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [wishlist, setWishlist] = useState(new Set());
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [heroSlide, setHeroSlide] = useState(0);
 
   useEffect(() => {
-    getProducts({ limit: 5, sort: "rating" })
+    const interval = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    getProducts({ featured: true, limit: 5 })
       .then((data) => setFeaturedProducts(data.items))
       .catch(() => setFeaturedProducts([]));
 
@@ -57,14 +73,6 @@ const Home = () => {
       })
       .catch(() => setCategories([]));
   }, [t]);
-
-  const toggleWishlist = (id) => {
-    setWishlist((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  };
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -114,10 +122,25 @@ const Home = () => {
           </div>
         </div>
         <div className="hero-image">
-          <img
-            src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=900&q=80"
-            alt="Velora collection"
-          />
+          {HERO_IMAGES.map((src, idx) => (
+            <img
+              key={src}
+              src={src}
+              alt="Velora collection"
+              className={idx === heroSlide ? "hero-slide active" : "hero-slide"}
+            />
+          ))}
+          <div className="hero-dots">
+            {HERO_IMAGES.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className={idx === heroSlide ? "hero-dot active" : "hero-dot"}
+                onClick={() => setHeroSlide(idx)}
+                aria-label={`Slide ${idx + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -171,9 +194,18 @@ const Home = () => {
                   <button
                     type="button"
                     className="wishlist-heart"
-                    onClick={() => toggleWishlist(product._id)}
+                    onClick={() =>
+                      toggleWishlist({
+                        _id: product._id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        category: product.category,
+                        brand: product.brand,
+                      })
+                    }
                   >
-                    {wishlist.has(product._id) ? <RiHeartFill className="filled" /> : <RiHeartLine />}
+                    {isWishlisted(product._id) ? <RiHeartFill className="filled" /> : <RiHeartLine />}
                   </button>
                 </div>
                 <div className="product-card-body">
@@ -202,6 +234,10 @@ const Home = () => {
                           name: product.name,
                           price: product.price,
                           image: resolveImageUrl(product.image),
+                          brand: product.brand,
+                          category: product.category,
+                          rating: product.rating,
+                          reviewsCount: product.reviewsCount,
                         })
                       }
                       disabled={product.stock === 0}

@@ -6,7 +6,9 @@
     "cart": "Cart",
     "signin": "Sign In",
     "signout": "Sign Out",
-    "admin": "Admin Panel"
+    "admin": "Admin Panel",
+    "wishlist": "Wishlist",
+    "myOrders": "My Orders"
   },
   "home": {
     "heroTitle": "Modern Clothing Store",
@@ -82,7 +84,24 @@
     "name": "Your name",
     "phone": "Phone number",
     "payWithCard": "Pay with card",
-    "placeOrder": "Place order"
+    "placeOrder": "Place order",
+    "myOrders": "My Orders",
+    "orderId": "Order ID",
+    "orderDate": "Date",
+    "orderStatus": "Status",
+    "orderTotal": "Total",
+    "orderPayment": "Payment",
+    "orderEmpty": "You don't have any orders yet",
+    "orderEmptyDesc": "Shop to see your orders appear here",
+    "statusPending": "Pending",
+    "statusProcessing": "Processing",
+    "statusReady": "Ready for pickup",
+    "statusCompleted": "Completed",
+    "statusCancelled": "Cancelled",
+    "paymentPaid": "Paid",
+    "paymentPending": "Pending",
+    "paymentFailed": "Failed",
+    "itemsCount": "items"
   },
   "auth": {
     "signin": "Sign In",
@@ -113,5 +132,12 @@
   },
   "footer": {
     "rights": "All rights reserved"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty": "You don't have any favorite products yet",
+    "emptyDesc": "Save products by tapping the heart icon in the shop",
+    "remove": "Remove",
+    "moveToCart": "Add to Cart"
   }
 }

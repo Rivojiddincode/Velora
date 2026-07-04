@@ -6,7 +6,9 @@
     "cart": "Корзина",
     "signin": "Войти",
     "signout": "Выйти",
-    "admin": "Админ панель"
+    "admin": "Админ панель",
+    "wishlist": "Избранное",
+    "myOrders": "Мои заказы"
   },
   "home": {
     "heroTitle": "Современный магазин одежды",
@@ -82,7 +84,24 @@
     "name": "Ваше имя",
     "phone": "Номер телефона",
     "payWithCard": "Оплатить картой",
-    "placeOrder": "Подтвердить заказ"
+    "placeOrder": "Подтвердить заказ",
+    "myOrders": "Мои заказы",
+    "orderId": "Номер заказа",
+    "orderDate": "Дата",
+    "orderStatus": "Статус",
+    "orderTotal": "Итого",
+    "orderPayment": "Оплата",
+    "orderEmpty": "У вас пока нет заказов",
+    "orderEmptyDesc": "Сделайте покупку в магазине — ваши заказы появятся здесь",
+    "statusPending": "В ожидании",
+    "statusProcessing": "Готовится",
+    "statusReady": "Готов к выдаче",
+    "statusCompleted": "Выполнен",
+    "statusCancelled": "Отменён",
+    "paymentPaid": "Оплачено",
+    "paymentPending": "В ожидании",
+    "paymentFailed": "Неуспешно",
+    "itemsCount": "товара"
   },
   "auth": {
     "signin": "Войти",
@@ -113,5 +132,12 @@
   },
   "footer": {
     "rights": "Все права защищены"
+  },
+  "wishlist": {
+    "title": "Избранное",
+    "empty": "У вас пока нет избранных товаров",
+    "emptyDesc": "Сохраняйте товары нажатием на сердечко в магазине",
+    "remove": "Удалить",
+    "moveToCart": "В корзину"
   }
 }

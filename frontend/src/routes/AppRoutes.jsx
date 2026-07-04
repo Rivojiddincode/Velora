@@ -12,6 +12,8 @@ import Shop from "../pages/client/Shop";
 import ProductDetails from "../pages/client/ProductDetails";
 import Cart from "../pages/client/Cart";
 import Contact from "../pages/client/Contact";
+import MyOrders from "../pages/client/MyOrders";
+import Wishlist from "../pages/client/Wishlist";
 
 // Admin Pages
 import Dashboard from "../pages/admin/Dashboard";
@@ -19,7 +21,6 @@ import Products from "../pages/admin/Products";
 import Orders from "../pages/admin/Orders";
 import Settings from "../pages/admin/Settings";
 import Users from "../pages/admin/Users";
-import Categories from "../pages/admin/Categories";
 
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
@@ -41,6 +42,8 @@ function AppRoutes() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/my-orders" element={<MyOrders />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Route>
       </Route>
 
@@ -49,7 +52,6 @@ function AppRoutes() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="products" element={<Products />} />
-          <Route path="categories" element={<Categories />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<Settings />} />

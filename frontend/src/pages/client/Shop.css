@@ -334,7 +334,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 3.75rem!important;
   border-radius: 10px;
   background: transparent;
   border: 1px solid var(--primary-gold);

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { RiShoppingCart2Line } from 'react-icons/ri';
+import { RiShoppingCart2Line, RiHeartLine, RiFileList3Line } from 'react-icons/ri';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
 import ThemeToggle from '../common/ThemeToggle';
 import LanguageSwitcher from '../common/LanguageSwitcher';
 import './Navbar.css';
@@ -13,6 +14,7 @@ const Navbar = () => {
   const { t } = useTranslation();
   const { user, signout } = useAuth();
   const { count } = useCart();
+  const { count: wishlistCount } = useWishlist();
   const navigate = useNavigate();
 
   const handleSignout = () => {
@@ -52,6 +54,13 @@ const Navbar = () => {
               {t('nav.contact')}
             </Link>
           </li>
+          {user && (
+            <li className="navbar-item">
+              <Link to="/my-orders" className="navbar-link" onClick={() => setIsOpen(false)}>
+                {t('nav.myOrders')}
+              </Link>
+            </li>
+          )}
           {user?.role === 'admin' && (
             <li className="navbar-item">
               <Link to="/admin" className="navbar-link" onClick={() => setIsOpen(false)}>
@@ -64,7 +73,16 @@ const Navbar = () => {
         <div className="navbar-actions">
           <LanguageSwitcher />
           <ThemeToggle />
-          <Link to="/cart" className="navbar-btn navbar-btn-secondary navbar-cart">
+          {user && (
+            <Link to="/my-orders" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.myOrders')}>
+              <RiFileList3Line />
+            </Link>
+          )}
+          <Link to="/wishlist" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.wishlist')}>
+            <RiHeartLine />
+            {wishlistCount > 0 && <span className="cart-badge">{wishlistCount}</span>}
+          </Link>
+          <Link to="/cart" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.cart')}>
             <RiShoppingCart2Line />
             {count > 0 && <span className="cart-badge">{count}</span>}
           </Link>

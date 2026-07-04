@@ -6,7 +6,9 @@
     "cart": "Savat",
     "signin": "Kirish",
     "signout": "Chiqish",
-    "admin": "Admin panel"
+    "admin": "Admin panel",
+    "wishlist": "Yoqtirganlarim",
+    "myOrders": "Buyurtmalarim"
   },
   "home": {
     "heroTitle": "Zamonaviy kiyimlar do'koni",
@@ -82,7 +84,24 @@
     "name": "Ismingiz",
     "phone": "Telefon raqam",
     "payWithCard": "Karta orqali to'lash",
-    "placeOrder": "Buyurtmani tasdiqlash"
+    "placeOrder": "Buyurtmani tasdiqlash",
+    "myOrders": "Buyurtmalarim",
+    "orderId": "Buyurtma raqami",
+    "orderDate": "Sana",
+    "orderStatus": "Holati",
+    "orderTotal": "Jami",
+    "orderPayment": "To'lov",
+    "orderEmpty": "Sizda hali buyurtmalar yo'q",
+    "orderEmptyDesc": "Do'kondan xarid qiling — buyurtmalaringiz shu yerda ko'rinadi",
+    "statusPending": "Kutilmoqda",
+    "statusProcessing": "Tayyorlanmoqda",
+    "statusReady": "Olib ketishga tayyor",
+    "statusCompleted": "Bajarildi",
+    "statusCancelled": "Bekor qilindi",
+    "paymentPaid": "To'landi",
+    "paymentPending": "Kutilmoqda",
+    "paymentFailed": "Muvaffaqiyatsiz",
+    "itemsCount": "mahsulot"
   },
   "auth": {
     "signin": "Kirish",
@@ -113,5 +132,12 @@
   },
   "footer": {
     "rights": "Barcha huquqlar himoyalangan"
+  },
+  "wishlist": {
+    "title": "Yoqtirganlarim",
+    "empty": "Hozircha yoqtirgan mahsulotingiz yo'q",
+    "emptyDesc": "Do'kondan mahsulotlarni yurak belgisi orqali saqlab qo'ying",
+    "remove": "O'chirish",
+    "moveToCart": "Savatga qo'shish"
   }
 }

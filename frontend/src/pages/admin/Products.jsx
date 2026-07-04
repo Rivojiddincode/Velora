@@ -7,7 +7,6 @@ import {
   deleteProduct,
   resolveImageUrl,
 } from "../../services/productService";
-import { useSearchParams } from "react-router-dom";
 
 const emptyForm = {
   name: "",
@@ -20,6 +19,7 @@ const emptyForm = {
   sku: "",
   sizes: "",
   colors: "",
+  featured: false,
   images: [],
 };
 
@@ -31,18 +31,16 @@ const Products = () => {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [error, setError] = useState("");
-  const [searchParams] = useSearchParams();
-  const searchQuery = searchParams.get("search") || "";
 
   const load = () => {
     setLoading(true);
-    getProducts({ limit: 200, search: searchQuery })
+    getProducts({ limit: 200 })
       .then((data) => setProducts(data.items))
       .catch(() => setError("Mahsulotlarni yuklab bo'lmadi"))
       .finally(() => setLoading(false));
   };
 
-  useEffect(load, [searchQuery]);
+  useEffect(load, []);
 
   const openCreate = () => {
     setForm(emptyForm);
@@ -62,6 +60,7 @@ const Products = () => {
       sku: p.sku || "",
       sizes: (p.sizes || []).join(", "),
       colors: (p.colors || []).join(", "),
+      featured: p.featured || false,
       images: [],
     });
     setEditingId(p._id);
@@ -69,8 +68,11 @@ const Products = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setForm((f) => ({ ...f, [name]: files ? Array.from(files) : value }));
+    const { name, value, files, type, checked } = e.target;
+    setForm((f) => ({
+      ...f,
+      [name]: files ? Array.from(files) : type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -80,6 +82,8 @@ const Products = () => {
     Object.entries(form).forEach(([key, value]) => {
       if (key === "images") {
         value.forEach((file) => fd.append("images", file));
+      } else if (key === "featured") {
+        fd.append(key, value ? "true" : "false");
       } else if (value !== null && value !== "") {
         fd.append(key, value);
       }
@@ -162,6 +166,11 @@ const Products = () => {
               Ranglar (CSS rang nomi yoki hex, vergul bilan)
               <input name="colors" value={form.colors} onChange={handleChange} placeholder="#0b1c3d, black, gray" />
             </label>
+            <label className="checkbox-label">
+              <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} />
+              Tanlangan mahsulotlarda ko'rsatish (Home sahifasida chiqadi)
+            </label>
+
             <label>
               Rasmlar (bir nechtasini tanlash mumkin)
               <input type="file" name="images" accept="image/*" multiple onChange={handleChange} />
@@ -196,6 +205,7 @@ const Products = () => {
                 <th>Yosh</th>
                 <th>Ombor</th>
                 <th>Narx</th>
+                <th>Tanlangan</th>
                 <th></th>
               </tr>
             </thead>
@@ -214,6 +224,7 @@ const Products = () => {
                   <td>{product.ageGroup === "kids" ? t("shop.kids") : t("shop.adults")}</td>
                   <td>{product.stock}</td>
                   <td>{product.price?.toLocaleString()} so'm</td>
+                  <td>{product.featured ? "⭐" : "—"}</td>
                   <td className="flex" style={{ gap: "0.5rem" }}>
                     <button className="btn-ghost" onClick={() => openEdit(product)}>
                       {t("admin.edit")}

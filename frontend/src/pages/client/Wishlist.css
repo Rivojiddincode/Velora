@@ -1,0 +1,130 @@
+.wishlist-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.wishlist-page h1 {
+  font-size: 1.8rem;
+  margin: 0 0 1.5rem;
+  color: var(--text-primary);
+}
+
+.wishlist-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.wishlist-empty-icon {
+  font-size: 3rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.wishlist-empty h2 {
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.wishlist-empty p {
+  color: var(--text-secondary);
+  margin: 0 0 1.5rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg, 20px);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.product-card:hover {
+  border-color: var(--primary-gold);
+  transform: translateY(-2px);
+}
+
+.product-card-image {
+  position: relative;
+}
+
+.product-card-image img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
+}
+
+.wishlist-remove-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--error);
+}
+
+.product-card-body {
+  padding: 1rem;
+}
+
+.product-card-body h3 {
+  margin: 0 0 0.15rem;
+  font-size: 1rem;
+}
+
+.product-card-body h3 a {
+  color: var(--text-primary);
+}
+
+.product-category {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin: 0 0 0.6rem;
+}
+
+.product-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.product-actions .price {
+  font-weight: 800;
+  color: var(--primary-gold);
+  font-size: 0.95rem;
+}
+
+.add-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--primary-gold);
+  color: var(--primary-gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.add-cart-btn:hover {
+  background: var(--primary-gold);
+  color: var(--primary-dark);
+}

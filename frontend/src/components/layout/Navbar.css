@@ -6,9 +6,9 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--navbar-bg);
+    background: rgba(15, 15, 15, 0.95);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 1rem 0;
 }
 
@@ -70,7 +70,9 @@
 
 .navbar-link {
     position: relative;
-    color: var(--navbar-text);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
     text-decoration: none;
     transition: color 0.3s ease;
     padding: 0.5rem 0;
@@ -108,10 +110,10 @@
 }
 
 .navbar-btn {
-    padding: 0.85rem 1.5rem;
-    border-radius: 999px;
+    padding: 0.65rem 1.25rem;
+    border-radius: 12px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
     text-decoration: none;
     transition: all 0.3s ease;
     border: none;
@@ -119,7 +121,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
 }
 
 .navbar-btn-primary {
@@ -198,9 +199,9 @@
         right: 0;
         flex-direction: column;
         gap: 0;
-        background: var(--navbar-menu-bg);
+        background: rgba(15, 15, 15, 0.98);
         backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
@@ -242,8 +243,8 @@
         width: 100%;
         gap: 0.5rem;
         padding: 1rem;
-        background: var(--navbar-menu-bg);
-        border-bottom: 1px solid var(--border-color);
+        background: rgba(15, 15, 15, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .navbar-menu.active~.navbar-actions {
@@ -294,40 +295,36 @@
 .navbar-menu.active {
     animation: slideDown 0.3s ease;
 }
-
 .navbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
-.navbar-cart {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    aspect-ratio: 1 / 1;
-    padding: 0 !important;
-    font-size: 1.5rem;
-    border-radius: 50%;
-    background: rgba(212, 175, 55, 0.15);
+.navbar-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0 !important;
+  font-size: 1.2rem;
 }
 
 .cart-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: var(--primary-gold);
-    color: var(--primary-dark);
-    font-size: 0.65rem;
-    font-weight: 700;
-    min-width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 4px;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--primary-gold);
+  color: var(--primary-dark);
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
 }

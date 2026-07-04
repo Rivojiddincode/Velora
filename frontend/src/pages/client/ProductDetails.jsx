@@ -17,12 +17,14 @@ import {
 } from "react-icons/ri";
 import { getProductById, resolveImages } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
 
   const [product, setProduct] = useState(null);
   const [notFound, setNotFound] = useState(false);
@@ -30,7 +32,6 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [wishlisted, setWishlisted] = useState(false);
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
@@ -69,6 +70,10 @@ const ProductDetails = () => {
         image: images[0],
         size: selectedSize,
         color: selectedColor,
+        brand: product.brand,
+        category: product.category,
+        rating: product.rating,
+        reviewsCount: product.reviewsCount,
       },
       quantity
     );
@@ -97,10 +102,19 @@ const ProductDetails = () => {
             <button
               type="button"
               className="pd-wishlist-btn"
-              onClick={() => setWishlisted((w) => !w)}
+              onClick={() =>
+                toggleWishlist({
+                  _id: product._id,
+                  name: product.name,
+                  price: product.price,
+                  image: product.image,
+                  category: product.category,
+                  brand: product.brand,
+                })
+              }
               aria-label="wishlist"
             >
-              {wishlisted ? <RiHeartFill className="filled" /> : <RiHeartLine />}
+              {isWishlisted(product._id) ? <RiHeartFill className="filled" /> : <RiHeartLine />}
             </button>
           </div>
         </div>
@@ -115,9 +129,18 @@ const ProductDetails = () => {
               <button
                 type="button"
                 className="pd-link-btn"
-                onClick={() => setWishlisted((w) => !w)}
+                onClick={() =>
+                  toggleWishlist({
+                    _id: product._id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    category: product.category,
+                    brand: product.brand,
+                  })
+                }
               >
-                {wishlisted ? <RiHeartFill /> : <RiHeartLine />} Wishlist
+                {isWishlisted(product._id) ? <RiHeartFill /> : <RiHeartLine />} Wishlist
               </button>
             </div>
           </div>

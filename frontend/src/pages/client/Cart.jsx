@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {
+  RiCloseLine,
+  RiStarFill,
+  RiSubtractLine,
+  RiAddLine,
+  RiDeleteBinLine,
+  RiMapPinLine,
+  RiUserLine,
+  RiPhoneLine,
+  RiLockLine,
+  RiShieldCheckLine,
+  RiRefreshLine,
+  RiShieldKeyholeLine,
+} from "react-icons/ri";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { getSettings } from "../../services/settingsService";
@@ -65,6 +79,11 @@ const Cart = () => {
 
   return (
     <div className="cart-page">
+      <div className="cart-breadcrumb">
+        <Link to="/">{t("nav.home")}</Link>
+        <span>/</span>
+        <span className="current">{t("cart.title")}</span>
+      </div>
       <h1>{t("cart.title")}</h1>
 
       {items.length === 0 ? (
@@ -76,63 +95,171 @@ const Cart = () => {
         </div>
       ) : (
         <div className="cart-layout">
-          <div className="cart-items">
-            {items.map((item) => (
-              <article className="cart-item-card" key={item._id}>
-                <img src={item.image} alt={item.name} />
-                <div className="cart-item-details">
-                  <div className="cart-item-header">
-                    <h3>{item.name}</h3>
-                    <span className="item-price">{item.price?.toLocaleString()} so'm</span>
+          <div className="cart-left">
+            <div className="cart-items-card">
+              <h2>
+                {t("cart.title")} <span className="count-badge">({items.length})</span>
+              </h2>
+
+              <div className="cart-items">
+                {items.map((item) => (
+                  <div className="cart-item" key={item._id}>
+                    <img src={item.image} alt={item.name} />
+
+                    <div className="cart-item-info">
+                      <div className="cart-item-top">
+                        <div>
+                          <h3>{item.name}</h3>
+                          <p className="cart-item-meta">
+                            {item.brand || "Velora"}
+                            {item.category ? ` • ${item.category}` : ""}
+                          </p>
+                          {item.reviewsCount > 0 && (
+                            <div className="cart-item-rating">
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                <RiStarFill key={i} className={i < Math.round(item.rating) ? "filled" : ""} />
+                              ))}
+                              <span>
+                                {item.rating?.toFixed(1)} ({item.reviewsCount})
+                              </span>
+                            </div>
+                          )}
+                          {(item.size || item.color) && (
+                            <p className="cart-item-options">
+                              {item.size && (
+                                <span>
+                                  {t("product.details")} {t("shop.size") || "Size"}: <strong>{item.size}</strong>
+                                </span>
+                              )}
+                              {item.color && (
+                                <span>
+                                  {t("shop.color")}: <strong>{item.color}</strong>
+                                </span>
+                              )}
+                            </p>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          className="cart-item-close"
+                          onClick={() => removeFromCart(item._id)}
+                          aria-label={t("cart.remove")}
+                        >
+                          <RiCloseLine />
+                        </button>
+                      </div>
+
+                      <div className="cart-item-bottom">
+                        <div className="cart-item-qty">
+                          <button type="button" onClick={() => updateQuantity(item._id, item.quantity - 1)}>
+                            <RiSubtractLine />
+                          </button>
+                          <span>{item.quantity}</span>
+                          <button type="button" onClick={() => updateQuantity(item._id, item.quantity + 1)}>
+                            <RiAddLine />
+                          </button>
+                        </div>
+
+                        <div className="cart-item-price-block">
+                          <span className="cart-item-price">
+                            {(item.price * item.quantity).toLocaleString()} so'm
+                          </span>
+                          <button
+                            type="button"
+                            className="cart-item-remove"
+                            onClick={() => removeFromCart(item._id)}
+                          >
+                            <RiDeleteBinLine /> {t("cart.remove")}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <label className="quantity-label">
-                    {t("cart.quantity") || "Soni"}
-                    <input
-                      type="number"
-                      min="1"
-                      value={item.quantity}
-                      onChange={(e) => updateQuantity(item._id, Number(e.target.value))}
-                    />
-                  </label>
-                  <div className="cart-item-footer">
-                    <span className="item-total">{(item.price * item.quantity).toLocaleString()} so'm</span>
-                    <button onClick={() => removeFromCart(item._id)} className="text-button">
-                      {t("cart.remove")}
-                    </button>
-                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="cart-trust-row">
+              <div>
+                <RiShieldCheckLine />
+                <div>
+                  <strong>Xavfsiz to'lov kafolati</strong>
+                  <span>Ma'lumotlaringiz 100% himoyalangan</span>
                 </div>
-              </article>
-            ))}
+              </div>
+              <div className="trust-divider"></div>
+              <div>
+                <RiRefreshLine />
+                <div>
+                  <strong>Oson qaytarish</strong>
+                  <span>14 kun ichida qaytarish mumkin</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <aside className="cart-summary">
             <h2>{t("cart.checkout")}</h2>
 
             <div className="summary-row">
+              <span>Subtotal</span>
+              <span>{total.toLocaleString()} so'm</span>
+            </div>
+            <div className="summary-row">
+              <span>Xizmat turi</span>
+              <span className="highlight-green">Do'kondan olib ketish</span>
+            </div>
+            <div className="summary-row">
+              <span>Chegirma</span>
+              <span className="text-muted">yo'q</span>
+            </div>
+            <div className="summary-row">
+              <span>Soliq (QQS)</span>
+              <span className="text-muted">Narxga kiritilgan</span>
+            </div>
+
+            <div className="summary-total-row">
               <span>{t("cart.total")}</span>
               <strong>{total.toLocaleString()} so'm</strong>
             </div>
 
-            <div className="pickup-box">
-              <span className="text-muted">{t("cart.pickup")}</span>
-              <p>{pickupAddress || "..."}</p>
+            <label className="checkout-field">
+              <RiMapPinLine /> {t("cart.pickup")}
+            </label>
+            <div className="checkout-static-value">
+              <RiMapPinLine />
+              <span>{pickupAddress || "..."}</span>
             </div>
 
             <label className="checkout-field">
-              {t("cart.name")}
-              <input value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+              <RiUserLine /> {t("cart.name")}
             </label>
+            <div className="checkout-input-icon">
+              <RiUserLine />
+              <input value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+            </div>
 
             <label className="checkout-field">
-              {t("cart.phone")}
-              <input value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} placeholder="+998 90 000 00 00" />
+              <RiPhoneLine /> {t("cart.phone")}
             </label>
+            <div className="checkout-input-icon">
+              <RiPhoneLine />
+              <input
+                value={customerPhone}
+                onChange={(e) => setCustomerPhone(e.target.value)}
+                placeholder="+998 90 000 00 00"
+              />
+            </div>
 
             {error && <div className="form-error">{error}</div>}
 
-            <button className="primary-button" onClick={handleCheckout} disabled={submitting}>
-              {submitting ? "..." : t("cart.payWithCard")}
+            <button className="pay-button" onClick={handleCheckout} disabled={submitting}>
+              <RiLockLine /> {submitting ? "..." : t("cart.payWithCard")}
             </button>
+
+            <p className="secure-note">
+              <RiShieldKeyholeLine /> Sizning ma'lumotlaringiz xavfsiz va himoyalangan
+            </p>
           </aside>
         </div>
       )}
