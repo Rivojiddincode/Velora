@@ -2,11 +2,11 @@ import "./AdminHeader.sass";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { RiSearchLine } from "react-icons/ri";
+import { RiSearchLine, RiMenuLine } from "react-icons/ri";
 import ThemeToggle from "../common/ThemeToggle";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 
-const AdminHeader = () => {
+const AdminHeader = ({ onToggleSidebar }) => {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -42,6 +42,9 @@ const AdminHeader = () => {
   return (
     <header className="admin-header">
       <div className="vt">
+        <button type="button" className="sidebar-toggle-btn" onClick={onToggleSidebar} aria-label="Toggle Sidebar">
+          <RiMenuLine />
+        </button>
         <div className="header-logo">V</div>
         <div className="breadcrumb">
           <span className="breadcrumb__root">{t("admin.dashboard")}</span>

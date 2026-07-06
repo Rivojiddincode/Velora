@@ -43,45 +43,47 @@ const Users = () => {
         {loading ? (
           <p>...</p>
         ) : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Ism</th>
-                <th>Email</th>
-                <th>Telefon</th>
-                <th>Rol</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => (
-                <tr key={u._id}>
-                  <td>{u.name}</td>
-                  <td>{u.email}</td>
-                  <td>{u.phone}</td>
-                  <td>
-                    <select
-                      value={u.role}
-                      onChange={(e) => handleRoleChange(u._id, e.target.value)}
-                      disabled={u._id === currentUser?.id}
-                    >
-                      <option value="user">user</option>
-                      <option value="admin">admin</option>
-                    </select>
-                  </td>
-                  <td>
-                    <button
-                      className="text-button"
-                      onClick={() => handleDelete(u._id)}
-                      disabled={u._id === currentUser?.id}
-                    >
-                      {t("admin.delete")}
-                    </button>
-                  </td>
+          <div className="table-responsive">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Ism</th>
+                  <th>Email</th>
+                  <th>Telefon</th>
+                  <th>Rol</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {users.map((u) => (
+                  <tr key={u._id}>
+                    <td>{u.name}</td>
+                    <td>{u.email}</td>
+                    <td>{u.phone}</td>
+                    <td>
+                      <select
+                        value={u.role}
+                        onChange={(e) => handleRoleChange(u._id, e.target.value)}
+                        disabled={u._id === currentUser?.id}
+                      >
+                        <option value="user">user</option>
+                        <option value="admin">admin</option>
+                      </select>
+                    </td>
+                    <td>
+                      <button
+                        className="text-button"
+                        onClick={() => handleDelete(u._id)}
+                        disabled={u._id === currentUser?.id}
+                      >
+                        {t("admin.delete")}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </div>

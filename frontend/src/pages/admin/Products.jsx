@@ -7,6 +7,7 @@ import {
   deleteProduct,
   resolveImageUrl,
 } from "../../services/productService";
+import { getCategories } from "../../services/categoryService";
 
 const emptyForm = {
   name: "",
@@ -31,6 +32,7 @@ const Products = () => {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [error, setError] = useState("");
+  const [categoriesList, setCategoriesList] = useState([]);
 
   const load = () => {
     setLoading(true);
@@ -38,6 +40,10 @@ const Products = () => {
       .then((data) => setProducts(data.items))
       .catch(() => setError("Mahsulotlarni yuklab bo'lmadi"))
       .finally(() => setLoading(false));
+
+    getCategories()
+      .then(setCategoriesList)
+      .catch(() => {});
   };
 
   useEffect(load, []);
@@ -141,7 +147,14 @@ const Products = () => {
             </label>
             <label>
               Kategoriya
-              <input name="category" value={form.category} onChange={handleChange} placeholder="Men's Suit, Ko'ylak..." />
+              <select name="category" value={form.category} onChange={handleChange} required>
+                <option value="">Kategoriyani tanlang...</option>
+                {categoriesList.map((cat) => (
+                  <option key={cat._id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
               Yosh guruhi
@@ -196,47 +209,49 @@ const Products = () => {
         {loading ? (
           <p>...</p>
         ) : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Nomi</th>
-                <th>Kategoriya</th>
-                <th>Yosh</th>
-                <th>Ombor</th>
-                <th>Narx</th>
-                <th>Tanlangan</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr key={product._id}>
-                  <td>
-                    <img
-                      src={resolveImageUrl(product.image)}
-                      alt={product.name}
-                      style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 8 }}
-                    />
-                  </td>
-                  <td>{product.name}</td>
-                  <td>{product.category}</td>
-                  <td>{product.ageGroup === "kids" ? t("shop.kids") : t("shop.adults")}</td>
-                  <td>{product.stock}</td>
-                  <td>{product.price?.toLocaleString()} so'm</td>
-                  <td>{product.featured ? "⭐" : "—"}</td>
-                  <td className="flex" style={{ gap: "0.5rem" }}>
-                    <button className="btn-ghost" onClick={() => openEdit(product)}>
-                      {t("admin.edit")}
-                    </button>
-                    <button className="text-button" onClick={() => handleDelete(product._id)}>
-                      {t("admin.delete")}
-                    </button>
-                  </td>
+          <div className="table-responsive">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Nomi</th>
+                  <th>Kategoriya</th>
+                  <th>Yosh</th>
+                  <th>Ombor</th>
+                  <th>Narx</th>
+                  <th>Tanlangan</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {products.map((product) => (
+                  <tr key={product._id}>
+                    <td>
+                      <img
+                        src={resolveImageUrl(product.image)}
+                        alt={product.name}
+                        style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 8 }}
+                      />
+                    </td>
+                    <td>{product.name}</td>
+                    <td>{product.category}</td>
+                    <td>{product.ageGroup === "kids" ? t("shop.kids") : t("shop.adults")}</td>
+                    <td>{product.stock}</td>
+                    <td>{product.price?.toLocaleString()} so'm</td>
+                    <td>{product.featured ? "⭐" : "—"}</td>
+                    <td className="flex" style={{ gap: "0.5rem" }}>
+                      <button className="btn-ghost" onClick={() => openEdit(product)}>
+                        {t("admin.edit")}
+                      </button>
+                      <button className="text-button" onClick={() => handleDelete(product._id)}>
+                        {t("admin.delete")}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </div>

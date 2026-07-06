@@ -37,43 +37,45 @@ const Orders = () => {
         {loading ? (
           <p>...</p>
         ) : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Mijoz</th>
-                <th>Telefon</th>
-                <th>Jami</th>
-                <th>To'lov</th>
-                <th>Status</th>
-                <th>Sana</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id.slice(-6).toUpperCase()}</td>
-                  <td>{order.customerName || order.user?.name}</td>
-                  <td>{order.customerPhone || order.user?.phone}</td>
-                  <td>{order.totalAmount?.toLocaleString()} so'm</td>
-                  <td>{order.paymentStatus}</td>
-                  <td>
-                    <select
-                      value={order.status}
-                      onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                    >
-                      {STATUSES.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+          <div className="table-responsive">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Mijoz</th>
+                  <th>Telefon</th>
+                  <th>Jami</th>
+                  <th>To'lov</th>
+                  <th>Status</th>
+                  <th>Sana</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id.slice(-6).toUpperCase()}</td>
+                    <td>{order.customerName || order.user?.name}</td>
+                    <td>{order.customerPhone || order.user?.phone}</td>
+                    <td>{order.totalAmount?.toLocaleString()} so'm</td>
+                    <td>{order.paymentStatus}</td>
+                    <td>
+                      <select
+                        value={order.status}
+                        onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                      >
+                        {STATUSES.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </div>

@@ -139,5 +139,11 @@
     "emptyDesc": "Save products by tapping the heart icon in the shop",
     "remove": "Remove",
     "moveToCart": "Add to Cart"
+  },
+  "toast": {
+    "addedToCart": "\"{{name}}\" added to cart",
+    "removedFromCart": "\"{{name}}\" removed from cart",
+    "addedToWishlist": "\"{{name}}\" added to wishlist",
+    "removedFromWishlist": "\"{{name}}\" removed from wishlist"
   }
 }

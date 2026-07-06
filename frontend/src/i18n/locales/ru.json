@@ -139,5 +139,11 @@
     "emptyDesc": "Сохраняйте товары нажатием на сердечко в магазине",
     "remove": "Удалить",
     "moveToCart": "В корзину"
+  },
+  "toast": {
+    "addedToCart": "\"{{name}}\" добавлен в корзину",
+    "removedFromCart": "\"{{name}}\" удалён из корзины",
+    "addedToWishlist": "\"{{name}}\" добавлен в избранное",
+    "removedFromWishlist": "\"{{name}}\" удалён из избранного"
   }
 }

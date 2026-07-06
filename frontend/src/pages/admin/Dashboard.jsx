@@ -48,28 +48,30 @@ const Dashboard = () => {
         <div className="section-header">
           <h2>{t("admin.orders")}</h2>
         </div>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Mijoz</th>
-              <th>Jami</th>
-              <th>Status</th>
-              <th>Sana</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentOrders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id.slice(-6).toUpperCase()}</td>
-                <td>{order.customerName || order.user?.name}</td>
-                <td>{order.totalAmount?.toLocaleString()} so'm</td>
-                <td>{order.status}</td>
-                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+        <div className="table-responsive">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Mijoz</th>
+                <th>Jami</th>
+                <th>Status</th>
+                <th>Sana</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {recentOrders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id.slice(-6).toUpperCase()}</td>
+                  <td>{order.customerName || order.user?.name}</td>
+                  <td>{order.totalAmount?.toLocaleString()} so'm</td>
+                  <td>{order.status}</td>
+                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   );

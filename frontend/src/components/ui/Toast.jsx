@@ -1,23 +1,19 @@
-import { useTheme } from "./ThemeContext";
-import { RiCheckLine, RiErrorWarningLine, RiCloseLine } from "react-icons/ri";
-import "./Toast.css";
+import { RiCheckLine, RiHeartFill, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
-const Toast = ({ id, message, type, onClose }) => {
-  const { isDark } = useTheme();
+const ICONS = {
+  success: RiCheckLine,
+  wishlist: RiHeartFill,
+  error: RiErrorWarningLine,
+};
+
+const Toast = ({ id, message, type = "success", onClose }) => {
+  const Icon = ICONS[type] || RiCheckLine;
 
   return (
-    <div className={`toast toast-${type} ${isDark ? "toast-dark" : "toast-light"}`}>
-      <div className="toast-content">
-        {type === "success" && <RiCheckLine className="toast-icon" />}
-        {type === "error" && <RiErrorWarningLine className="toast-icon" />}
-        <span>{message}</span>
-      </div>
-      <button
-        type="button"
-        className="toast-close"
-        onClick={() => onClose(id)}
-        aria-label="Close"
-      >
+    <div className={`toast toast-${type}`}>
+      <Icon className="toast-icon" />
+      <span className="toast-message">{message}</span>
+      <button type="button" className="toast-close" onClick={() => onClose(id)} aria-label="Close">
         <RiCloseLine />
       </button>
     </div>

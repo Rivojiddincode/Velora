@@ -18,6 +18,7 @@ import Wishlist from "../pages/client/Wishlist";
 // Admin Pages
 import Dashboard from "../pages/admin/Dashboard";
 import Products from "../pages/admin/Products";
+import Categories from "../pages/admin/Categories";
 import Orders from "../pages/admin/Orders";
 import Settings from "../pages/admin/Settings";
 import Users from "../pages/admin/Users";
@@ -52,6 +53,7 @@ function AppRoutes() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="products" element={<Products />} />
+          <Route path="categories" element={<Categories />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<Settings />} />

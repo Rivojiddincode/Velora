@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";
+import { ToastProvider } from "./context/ToastContext";
 import "./i18n";
 import App from "./App.jsx";
 
@@ -13,11 +14,13 @@ createRoot(document.getElementById("root")).render(
     <StrictMode>
       <ThemeProvider>
         <AuthProvider>
-          <CartProvider>
-            <WishlistProvider>
-              <App />
-            </WishlistProvider>
-          </CartProvider>
+          <ToastProvider>
+            <CartProvider>
+              <WishlistProvider>
+                <App />
+              </WishlistProvider>
+            </CartProvider>
+          </ToastProvider>
         </AuthProvider>
       </ThemeProvider>
     </StrictMode>

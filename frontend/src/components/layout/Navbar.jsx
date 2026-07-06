@@ -68,24 +68,30 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+          <li className="navbar-mobile-tools">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </li>
         </ul>
 
         <div className="navbar-actions">
-          <LanguageSwitcher />
-          <ThemeToggle />
+          <div className="navbar-desktop-tools">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
+          <Link to="/cart" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.cart')}>
+            <RiShoppingCart2Line />
+            {count > 0 && <span className="cart-badge">{count}</span>}
+          </Link>
+          <Link to="/wishlist" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.wishlist')}>
+            <RiHeartLine />
+            {wishlistCount > 0 && <span className="cart-badge">{wishlistCount}</span>}
+          </Link>
           {user && (
             <Link to="/my-orders" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.myOrders')}>
               <RiFileList3Line />
             </Link>
           )}
-          <Link to="/wishlist" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.wishlist')}>
-            <RiHeartLine />
-            {wishlistCount > 0 && <span className="cart-badge">{wishlistCount}</span>}
-          </Link>
-          <Link to="/cart" className="navbar-btn navbar-btn-secondary navbar-icon-btn" title={t('nav.cart')}>
-            <RiShoppingCart2Line />
-            {count > 0 && <span className="cart-badge">{count}</span>}
-          </Link>
           {user ? (
             <button type="button" className="navbar-btn navbar-btn-primary" onClick={handleSignout}>
               {t('nav.signout')}

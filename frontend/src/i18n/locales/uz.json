@@ -139,5 +139,11 @@
     "emptyDesc": "Do'kondan mahsulotlarni yurak belgisi orqali saqlab qo'ying",
     "remove": "O'chirish",
     "moveToCart": "Savatga qo'shish"
+  },
+  "toast": {
+    "addedToCart": "\"{{name}}\" savatga qo'shildi",
+    "removedFromCart": "\"{{name}}\" savatdan o'chirildi",
+    "addedToWishlist": "\"{{name}}\" yoqtirganlarga qo'shildi",
+    "removedFromWishlist": "\"{{name}}\" yoqtirganlardan o'chirildi"
   }
 }

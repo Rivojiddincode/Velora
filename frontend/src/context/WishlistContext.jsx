@@ -1,8 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useToast } from "./ToastContext";
 
 const WishlistContext = createContext(null);
 
 export const WishlistProvider = ({ children }) => {
+  const { t } = useTranslation();
+  const { showToast } = useToast();
+
   const [items, setItems] = useState(() => {
     const saved = localStorage.getItem("wishlist");
     return saved ? JSON.parse(saved) : [];
@@ -16,15 +21,20 @@ export const WishlistProvider = ({ children }) => {
 
   const toggleWishlist = (product) => {
     setItems((prev) => {
-      if (prev.some((i) => i._id === product._id)) {
+      const exists = prev.some((i) => i._id === product._id);
+      if (exists) {
+        showToast(t("toast.removedFromWishlist", { name: product.name }), "wishlist");
         return prev.filter((i) => i._id !== product._id);
       }
+      showToast(t("toast.addedToWishlist", { name: product.name }), "wishlist");
       return [...prev, product];
     });
   };
 
   const removeFromWishlist = (id) => {
+    const item = items.find((i) => i._id === id);
     setItems((prev) => prev.filter((i) => i._id !== id));
+    if (item) showToast(t("toast.removedFromWishlist", { name: item.name }), "wishlist");
   };
 
   return (

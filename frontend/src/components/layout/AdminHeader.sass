@@ -13,6 +13,28 @@ $input-bg: rgba(255, 255, 255, .03)
 $font: "Space Grotesk", sans-serif
 
 // ─── Header ───────────────────────────────────────────────
+.sidebar-toggle-btn
+  display: none
+  align-items: center
+  justify-content: center
+  width: 40px
+  height: 40px
+  border: 1px solid $gold-dim
+  border-radius: 12px
+  background: $input-bg
+  color: $gold
+  font-size: 22px
+  cursor: pointer
+  transition: all 0.3s ease
+  z-index: 10
+  
+  &:hover
+    background: $gold-glow
+    transform: scale(1.05)
+
+  @media (max-width: 900px)
+    display: inline-flex
+
 .admin-header
   position: relative
   height: 70px
@@ -25,11 +47,15 @@ $font: "Space Grotesk", sans-serif
   border-bottom: 1px solid var(--border-color)
   overflow: visible
   font-family: $font
+  
   .vt
     display: flex
+    align-items: center
     gap: 15px
     min-width: 0
     flex-wrap: wrap
+    width: 100%
+    justify-content: space-between
 
   // Ambient glow orbs
   &::before,
@@ -138,3 +164,30 @@ $font: "Space Grotesk", sans-serif
   gap: 0.75rem
   min-width: 0
   flex-wrap: wrap
+
+@media (max-width: 900px)
+  .admin-header
+    padding: 0 15px
+    
+    .vt
+      flex-wrap: nowrap
+      gap: 10px
+
+    .breadcrumb
+      display: none
+
+    .header-search
+      &__input
+        width: 160px
+        height: 38px
+        padding: 0 15px 0 35px
+        font-size: 13px
+
+      &__icon
+        left: 12px
+        font-size: 14px
+
+@media (max-width: 480px)
+  .admin-header
+    .header-search
+      display: none
