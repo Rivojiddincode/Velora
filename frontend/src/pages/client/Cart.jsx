@@ -103,7 +103,7 @@ const Cart = () => {
           <div className="cart-left">
             <div className="cart-items-card">
               <h2>
-                {t("cart.title")} <span className="count-badge">({items.length})</span>
+                {t("cart.title")} <span className="count-badge">({items.length} {t("cart.itemsCount")})</span>
               </h2>
 
               <div className="cart-items">
@@ -167,7 +167,7 @@ const Cart = () => {
 
                         <div className="cart-item-price-block">
                           <span className="cart-item-price">
-                            {(item.price * item.quantity).toLocaleString()} so'm
+                            {(item.price * item.quantity).toLocaleString()} {t("cart.currency")}
                           </span>
                           <button
                             type="button"
@@ -188,16 +188,16 @@ const Cart = () => {
               <div>
                 <RiShieldCheckLine />
                 <div>
-                  <strong>Xavfsiz to'lov kafolati</strong>
-                  <span>Ma'lumotlaringiz 100% himoyalangan</span>
+                  <strong>{t("cart.trustSafeTitle")}</strong>
+                  <span>{t("cart.trustSafeDesc")}</span>
                 </div>
               </div>
               <div className="trust-divider"></div>
               <div>
                 <RiRefreshLine />
                 <div>
-                  <strong>Oson qaytarish</strong>
-                  <span>14 kun ichida qaytarish mumkin</span>
+                  <strong>{t("cart.trustEasyTitle")}</strong>
+                  <span>{t("cart.trustEasyDesc")}</span>
                 </div>
               </div>
             </div>
@@ -207,25 +207,25 @@ const Cart = () => {
             <h2>{t("cart.checkout")}</h2>
 
             <div className="summary-row">
-              <span>Subtotal</span>
-              <span>{total.toLocaleString()} so'm</span>
+              <span>{t("cart.subtotal")}</span>
+              <span>{total.toLocaleString()} {t("cart.currency")}</span>
             </div>
             <div className="summary-row">
-              <span>Xizmat turi</span>
-              <span className="highlight-green">Do'kondan olib ketish</span>
+              <span>{t("cart.serviceType")}</span>
+              <span className="highlight-green">{t("cart.pickupFromStore")}</span>
             </div>
             <div className="summary-row">
-              <span>Chegirma</span>
-              <span className="text-muted">yo'q</span>
+              <span>{t("cart.discount")}</span>
+              <span className="text-muted">{t("cart.none")}</span>
             </div>
             <div className="summary-row">
-              <span>Soliq (QQS)</span>
-              <span className="text-muted">Narxga kiritilgan</span>
+              <span>{t("cart.tax")}</span>
+              <span className="text-muted">{t("cart.included")}</span>
             </div>
 
             <div className="summary-total-row">
               <span>{t("cart.total")}</span>
-              <strong>{total.toLocaleString()} so'm</strong>
+              <strong>{total.toLocaleString()} {t("cart.currency")}</strong>
             </div>
 
             <label className="checkout-field">
@@ -267,8 +267,8 @@ const Cart = () => {
               >
                 <RiLockLine />
                 <div>
-                  <strong>Karta orqali to'lash</strong>
-                  <span>inPAY orqali onlayn</span>
+                  <strong>{t("cart.paymentCardTitle")}</strong>
+                  <span>{t("cart.paymentCardDesc")}</span>
                 </div>
               </button>
               <button
@@ -278,8 +278,8 @@ const Cart = () => {
               >
                 <RiMapPinLine />
                 <div>
-                  <strong>Punktdan olib ketish</strong>
-                  <span>To'lov punktda amalga oshiriladi</span>
+                  <strong>{t("cart.paymentCashTitle")}</strong>
+                  <span>{t("cart.paymentCashDesc")}</span>
                 </div>
               </button>
             </div>
@@ -290,11 +290,11 @@ const Cart = () => {
                 ? "..."
                 : paymentMethod === "card"
                 ? t("cart.payWithCard")
-                : "Buyurtmani tasdiqlash"}
+                : t("cart.placeOrder")}
             </button>
 
             <p className="secure-note">
-              <RiShieldKeyholeLine /> Sizning ma'lumotlaringiz xavfsiz va himoyalangan
+              <RiShieldKeyholeLine /> {t("cart.secureNote")}
             </p>
           </aside>
         </div>

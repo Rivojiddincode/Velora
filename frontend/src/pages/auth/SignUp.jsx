@@ -29,7 +29,7 @@ function SignUp() {
       const redirectTo = location.state?.from || (created.role === "admin" ? "/admin" : "/");
       navigate(redirectTo, { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Xatolik yuz berdi");
+      setError(err.response?.data?.message || t("auth.errorGeneric"));
     } finally {
       setLoading(false);
     }
@@ -88,11 +88,11 @@ function SignUp() {
           </label>
 
           <button type="submit" disabled={loading}>
-            {loading ? "..." : t("auth.signup")}
+            {loading ? t("auth.loading") : t("auth.signup")}
           </button>
         </form>
         <div className="divider">
-          <span>OR</span>
+          <span>{t("auth.or")}</span>
         </div>
         <p className="switch-link" onClick={() => navigate("/signin")}>
           {t("auth.haveAccount")} <span>{t("auth.signin").toUpperCase()}</span>

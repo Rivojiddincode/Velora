@@ -38,6 +38,23 @@ const Shop = () => {
   const [sort, setSort] = useState("popular");
   const [page, setPage] = useState(1);
 
+  const getDisplayLabel = (name) => {
+    const normalized = String(name || "").trim().toLowerCase();
+    const map = {
+      women: t("home.categoryWomen"),
+      ayollar: t("home.categoryWomen"),
+      men: t("home.categoryMen"),
+      erkak: t("home.categoryMen"),
+      erkaklar: t("home.categoryMen"),
+      mujskoy: t("home.categoryMen"),
+      car: t("home.categoryCar"),
+      avto: t("home.categoryCar"),
+      kids: t("shop.kids"),
+      adults: t("shop.adults"),
+    };
+    return map[normalized] || name;
+  };
+
   useEffect(() => {
     getProductFilters()
       .then((data) => {
@@ -145,7 +162,7 @@ const Shop = () => {
                 className={category === c.name ? "sidebar-cat active" : "sidebar-cat"}
                 onClick={() => setCategory(c.name)}
               >
-                <span>{c.name}</span>
+                <span>{getDisplayLabel(c.name)}</span>
                 <span className="count">{c.count}</span>
               </button>
             ))}
@@ -167,7 +184,7 @@ const Shop = () => {
                 onChange={(e) => setMaxPrice(e.target.value)}
                 placeholder={t("shop.max")}
               />
-              <span className="text-muted">so'm</span>
+              <span className="text-muted">{t("common.currency")}</span>
             </div>
             {meta.priceMax > 0 && (
               <input
@@ -228,7 +245,7 @@ const Shop = () => {
               <option value="">{t("shop.allProducts")}</option>
               {meta.categories.map((c) => (
                 <option key={c.name} value={c.name}>
-                  {c.name}
+                  {getDisplayLabel(c.name)}
                 </option>
               ))}
             </select>
@@ -291,7 +308,7 @@ const Shop = () => {
                     <span className="new-badge">{t("shop.newBadge")}</span>
                   )}
                   <div className="product-actions">
-                    <span className="price">{product.price?.toLocaleString()} so'm</span>
+                    <span className="price">{product.price?.toLocaleString()} {t("common.currency")}</span>
                     <button
                       type="button"
                       className="add-cart-btn"

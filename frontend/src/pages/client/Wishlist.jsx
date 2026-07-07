@@ -54,7 +54,7 @@ const Wishlist = () => {
                 {product.category} {product.brand ? `• ${product.brand}` : ""}
               </p>
               <div className="product-actions">
-                <span className="price">{product.price?.toLocaleString()} so'm</span>
+                <span className="price">{product.price?.toLocaleString()} {t("common.currency")}</span>
                 <button
                   type="button"
                   className="add-cart-btn"

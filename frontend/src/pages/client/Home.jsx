@@ -20,12 +20,12 @@ import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import "./Home.css";
 
-const CATEGORY_IMAGES = [
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80",
-  "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&q=80",
-  "https://images.unsplash.com/photo-1519457851160-59d51e4b0e50?w=500&q=80",
-  "https://images.unsplash.com/photo-1560243563-062bfc001d68?w=500&q=80",
-];
+const CATEGORY_IMAGES = {
+  women: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&q=80",
+  men: "https://images.unsplash.com/photo-1519457851160-59d51e4b0e50?w=500&q=80",
+  car: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&q=80",
+  default: "https://images.unsplash.com/photo-1560243563-062bfc001d68?w=500&q=80",
+};
 
 const HERO_IMAGES = [
   "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=900&q=80",
@@ -45,6 +45,32 @@ const Home = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
 
+  const getDisplayLabel = (name) => {
+    const normalized = String(name || "").trim().toLowerCase();
+    const map = {
+      women: t("home.categoryWomen"),
+      ayollar: t("home.categoryWomen"),
+      men: t("home.categoryMen"),
+      erkek: t("home.categoryMen"),
+      erkak: t("home.categoryMen"),
+      erkaklar: t("home.categoryMen"),
+      mujskoy: t("home.categoryMen"),
+      car: t("home.categoryCar"),
+      avto: t("home.categoryCar"),
+      kids: t("shop.kids"),
+      adults: t("shop.adults"),
+    };
+    return map[normalized] || name;
+  };
+
+  const getCategoryImage = (name) => {
+    const normalized = String(name || "").trim().toLowerCase();
+    if (normalized.includes("women") || normalized.includes("ayollar") || normalized.includes("girl")) return CATEGORY_IMAGES.women;
+    if (normalized.includes("men") || normalized.includes("mujskoy") || normalized.includes("erkak") || normalized.includes("male") || normalized.includes("boy")) return CATEGORY_IMAGES.men;
+    if (normalized.includes("car") || normalized.includes("avto") || normalized.includes("auto")) return CATEGORY_IMAGES.car;
+    return CATEGORY_IMAGES.default;
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setHeroSlide((prev) => (prev + 1) % HERO_IMAGES.length);
@@ -61,13 +87,13 @@ const Home = () => {
       .then((meta) => {
         const ageCards = (meta.ageGroups || []).map((a) => ({
           key: a.name,
-          label: a.name === "kids" ? t("shop.kids") : t("shop.adults"),
+          label: getDisplayLabel(a.name),
           count: a.count,
           type: "ageGroup",
         }));
         const categoryCards = (meta.categories || [])
           .sort((a, b) => b.count - a.count)
-          .map((c) => ({ key: c.name, label: c.name, count: c.count, type: "category" }));
+          .map((c) => ({ key: c.name, label: getDisplayLabel(c.name), count: c.count, type: "category" }));
 
         setCategories([...ageCards, ...categoryCards].slice(0, 4));
       })
@@ -126,7 +152,7 @@ const Home = () => {
             <img
               key={src}
               src={src}
-              alt="Velora collection"
+              alt={t("home.heroImageAlt")}
               className={idx === heroSlide ? "hero-slide active" : "hero-slide"}
             />
           ))}
@@ -161,7 +187,7 @@ const Home = () => {
                 to={cat.type === "ageGroup" ? `/shop?ageGroup=${cat.key}` : `/shop?category=${encodeURIComponent(cat.key)}`}
                 className="category-card"
               >
-                <img src={CATEGORY_IMAGES[idx % CATEGORY_IMAGES.length]} alt={cat.label} />
+                <img src={getCategoryImage(cat.key)} alt={cat.label} />
                 <div className="category-overlay">
                   <span className="category-name">{cat.label}</span>
                   <span className="category-count">
@@ -212,7 +238,7 @@ const Home = () => {
                   <h3>
                     <Link to={`/product/${product._id}`}>{product.name}</Link>
                   </h3>
-                  <p className="product-category">{product.brand || "Velora"}</p>
+                  <p className="product-category">{product.brand || t("common.storeName")}</p>
                   {product.reviewsCount > 0 && (
                     <div className="card-rating">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -224,7 +250,7 @@ const Home = () => {
                     </div>
                   )}
                   <div className="product-actions">
-                    <span className="price">{product.price?.toLocaleString()} so'm</span>
+                    <span className="price">{product.price?.toLocaleString()} {t("common.currency")}</span>
                     <button
                       type="button"
                       className="add-cart-btn"

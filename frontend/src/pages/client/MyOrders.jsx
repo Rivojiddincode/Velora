@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 import { RiShoppingBag3Line, RiTimeLine } from "react-icons/ri";
 import { getMyOrders } from "../../services/orderService";
 import { resolveImageUrl } from "../../services/productService";
@@ -59,7 +60,7 @@ const MyOrders = () => {
                 <span className="text-muted">
                   <RiTimeLine /> {t("cart.orderDate")}
                 </span>
-                <p>{new Date(order.createdAt).toLocaleDateString()}</p>
+                <p>{new Date(order.createdAt).toLocaleDateString(i18n.language || undefined)}</p>
               </div>
               <span className={`order-status-badge ${STATUS_CLASS[order.status] || ""}`}>
                 {t(`cart.status${order.status.charAt(0).toUpperCase()}${order.status.slice(1)}`)}
@@ -73,7 +74,7 @@ const MyOrders = () => {
                   <div>
                     <p className="order-item-name">{item.name}</p>
                     <span className="text-muted">
-                      {item.quantity} x {item.price?.toLocaleString()} so'm
+                      {item.quantity} x {item.price?.toLocaleString()} {t("common.currency")}
                     </span>
                   </div>
                 </div>
@@ -90,7 +91,7 @@ const MyOrders = () => {
                   : t("cart.paymentPending")}
               </span>
               <span className="order-total">
-                {t("cart.orderTotal")}: <strong>{order.totalAmount?.toLocaleString()} so'm</strong>
+                {t("cart.orderTotal")}: <strong>{order.totalAmount?.toLocaleString()} {t("common.currency")}</strong>
               </span>
             </div>
           </div>

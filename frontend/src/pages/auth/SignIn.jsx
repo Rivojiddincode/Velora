@@ -35,7 +35,7 @@ const SignIn = () => {
       const redirectTo = location.state?.from || (user.role === "admin" ? "/admin" : "/");
       navigate(redirectTo, { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Xatolik yuz berdi");
+      setError(err.response?.data?.message || t("auth.errorGeneric"));
     } finally {
       setLoading(false);
     }
@@ -80,7 +80,7 @@ const SignIn = () => {
           </div>
 
           <button type="submit" disabled={loading}>
-            {loading ? "..." : t("auth.signin")}
+            {loading ? t("auth.loading") : t("auth.signin")}
           </button>
         </form>
 

@@ -51,7 +51,7 @@ const ProductDetails = () => {
   if (notFound) {
     return (
       <div className="pd-page">
-        <h2>Product not found</h2>
+        <h2>{t("product.notFound")}</h2>
         <Link to="/shop" className="button-link">
           {t("product.back")}
         </Link>
@@ -114,7 +114,7 @@ const ProductDetails = () => {
                   brand: product.brand,
                 })
               }
-              aria-label="wishlist"
+              aria-label={t("common.wishlist")}
             >
               {isWishlisted(product._id) ? <RiHeartFill className="filled" /> : <RiHeartLine />}
             </button>
@@ -130,7 +130,7 @@ const ProductDetails = () => {
                   type="button"
                   className="pd-action-toggle"
                   onClick={() => setActionOpen((v) => !v)}
-                  aria-label="Actions"
+                  aria-label={t("common.actions")}
                 >
                   <RiMore2Fill />
                 </button>
@@ -175,7 +175,7 @@ const ProductDetails = () => {
           <div className="pd-meta-row">
             {product.brand && (
               <div>
-                <span className="text-muted">Brand</span>
+                <span className="text-muted">{t("common.brand")}</span>
                 <p>{product.brand}</p>
               </div>
             )}
@@ -186,7 +186,7 @@ const ProductDetails = () => {
               </div>
             )}
             <div className="pd-price-block">
-              <span className="pd-price">{product.price?.toLocaleString()} so'm</span>
+              <span className="pd-price">{product.price?.toLocaleString()} {t("common.currency")}</span>
             </div>
           </div>
 
@@ -196,13 +196,13 @@ const ProductDetails = () => {
                 <RiStarFill key={i} className={i < Math.round(product.rating) ? "filled" : ""} />
               ))}
               <span>{product.rating?.toFixed(1)}</span>
-              <span className="text-muted">({product.reviewsCount} reviews)</span>
+              <span className="text-muted">({t("common.reviews", { count: product.reviewsCount })})</span>
             </div>
           )}
 
           {product.sizes?.length > 0 && (
             <div className="pd-option-group">
-              <span className="pd-option-label">Size</span>
+              <span className="pd-option-label">{t("common.size")}</span>
               <div className="pd-options">
                 {product.sizes.map((size) => (
                   <button
@@ -220,7 +220,7 @@ const ProductDetails = () => {
 
           {product.colors?.length > 0 && (
             <div className="pd-option-group">
-              <span className="pd-option-label">Color</span>
+              <span className="pd-option-label">{t("common.color")}</span>
               <div className="pd-options">
                 {product.colors.map((color) => (
                   <button
@@ -238,7 +238,7 @@ const ProductDetails = () => {
 
           <div className="pd-stock-row">
             <span className={product.stock > 0 ? "pd-stock in" : "pd-stock out"}>
-              ● {product.stock > 0 ? `In Stock (${product.stock})` : "Out of stock"}
+              ● {product.stock > 0 ? t("product.inStockWithCount", { count: product.stock }) : t("product.outOfStock")}
             </span>
             {product.sku && <span className="text-muted">SKU: {product.sku}</span>}
           </div>

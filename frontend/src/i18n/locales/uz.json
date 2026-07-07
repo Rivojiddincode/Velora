@@ -1,4 +1,14 @@
 {
+  "common": {
+    "storeName": "Velora",
+    "currency": "so'm",
+    "brand": "Brend",
+    "color": "Rang",
+    "size": "O'lcham",
+    "wishlist": "Yoqtirganlar",
+    "actions": "Harakatlar",
+    "reviews": "{{count}} ta sharh"
+  },
   "nav": {
     "home": "Bosh sahifa",
     "shop": "Do'kon",
@@ -40,7 +50,11 @@
     "newsletterDesc": "Birinchilardan bo'lib bilib oling",
     "newsletterPlaceholder": "Email manzilingiz...",
     "newsletterButton": "Obuna bo'lish",
-    "newsletterThanks": "Rahmat! Tez orada yangiliklarni yuboramiz."
+    "newsletterThanks": "Rahmat! Tez orada yangiliklarni yuboramiz.",
+    "heroImageAlt": "Velora kollektsiyasi",
+    "categoryWomen": "Ayollar",
+    "categoryMen": "Erkaklar",
+    "categoryCar": "Car"
   },
   "shop": {
     "title": "Do'kon",
@@ -72,7 +86,12 @@
     "back": "Ortga",
     "details": "Tafsilotlar",
     "category": "Kategoriya",
-    "stock": "Omborda"
+    "stock": "Omborda",
+    "share": "Ulashish",
+    "wishlist": "Yoqtirganlar",
+    "notFound": "Mahsulot topilmadi",
+    "inStockWithCount": "Omborda ({{count}})",
+    "outOfStock": "Mavjud emas"
   },
   "cart": {
     "title": "Savat",
@@ -101,7 +120,25 @@
     "paymentPaid": "To'landi",
     "paymentPending": "Kutilmoqda",
     "paymentFailed": "Muvaffaqiyatsiz",
-    "itemsCount": "mahsulot"
+    "itemsCount": "mahsulot",
+    "subtotal": "Oraliq jami",
+    "serviceType": "Xizmat turi",
+    "pickupFromStore": "Do'kondan olib ketish",
+    "discount": "Chegirma",
+    "none": "Yo'q",
+    "tax": "Soliq (QQS)",
+    "included": "Narxga kiritilgan",
+    "trustSafeTitle": "Xavfsiz to'lov kafolati",
+    "trustSafeDesc": "Ma'lumotlaringiz 100% himoyalangan",
+    "trustEasyTitle": "Oson qaytarish",
+    "trustEasyDesc": "14 kun ichida qaytarish mumkin",
+    "paymentCardTitle": "Karta orqali to'lash",
+    "paymentCardDesc": "inPAY orqali onlayn",
+    "paymentCashTitle": "Do'kondan olib ketish",
+    "paymentCashDesc": "To'lov punktda amalga oshiriladi",
+    "secureNote": "Sizning ma'lumotlaringiz xavfsiz va himoyalangan",
+    "currency": "so'm",
+    "errorGeneric": "Xatolik yuz berdi"
   },
   "auth": {
     "signin": "Kirish",
@@ -112,7 +149,10 @@
     "phone": "Telefon",
     "noAccount": "Akkountingiz yo'qmi?",
     "haveAccount": "Akkountingiz bormi?",
-    "loginRequired": "Davom etish uchun ro'yxatdan o'ting yoki tizimga kiring"
+    "loginRequired": "Davom etish uchun ro'yxatdan o'ting yoki tizimga kiring",
+    "errorGeneric": "Xatolik yuz berdi",
+    "loading": "Yuklanmoqda...",
+    "or": "YOKI"
   },
   "admin": {
     "dashboard": "Boshqaruv paneli",
@@ -131,7 +171,8 @@
     "dark": "Qorong'i"
   },
   "footer": {
-    "rights": "Barcha huquqlar himoyalangan"
+    "rights": "Barcha huquqlar himoyalangan",
+    "description": "{{storeName}} — zamonaviy, sifatli va uslubli kiyimlar uchun eng yaxshi tanlov."
   },
   "wishlist": {
     "title": "Yoqtirganlarim",
@@ -139,6 +180,17 @@
     "emptyDesc": "Do'kondan mahsulotlarni yurak belgisi orqali saqlab qo'ying",
     "remove": "O'chirish",
     "moveToCart": "Savatga qo'shish"
+  },
+  "contact": {
+    "title": "Biz bilan bog'lanish",
+    "description": "Savollaringiz bormi? Biz sizga yordam berishga tayyormiz. Xabar yuboring, biz tez orada javob beramiz.",
+    "name": "Ism",
+    "email": "Email",
+    "phone": "Telefon",
+    "address": "Manzil",
+    "message": "Xabar",
+    "submit": "Xabar yuborish",
+    "success": "Xabaringiz yuborildi."
   },
   "toast": {
     "addedToCart": "\"{{name}}\" savatga qo'shildi",

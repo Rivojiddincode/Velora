@@ -1,4 +1,14 @@
 {
+  "common": {
+    "storeName": "Velora",
+    "currency": "sum",
+    "brand": "Brand",
+    "color": "Color",
+    "size": "Size",
+    "wishlist": "Wishlist",
+    "actions": "Actions",
+    "reviews": "{{count}} reviews"
+  },
   "nav": {
     "home": "Home",
     "shop": "Shop",
@@ -40,7 +50,11 @@
     "newsletterDesc": "Be the first to know",
     "newsletterPlaceholder": "Your email...",
     "newsletterButton": "Subscribe",
-    "newsletterThanks": "Thanks! We'll send updates soon."
+    "newsletterThanks": "Thanks! We'll send updates soon.",
+    "heroImageAlt": "Velora collection",
+    "categoryWomen": "Women",
+    "categoryMen": "Men",
+    "categoryCar": "Car"
   },
   "shop": {
     "title": "Shop",
@@ -72,7 +86,12 @@
     "back": "Back",
     "details": "Details",
     "category": "Category",
-    "stock": "In stock"
+    "stock": "In stock",
+    "share": "Share",
+    "wishlist": "Wishlist",
+    "notFound": "Product not found",
+    "inStockWithCount": "In stock ({{count}})",
+    "outOfStock": "Out of stock"
   },
   "cart": {
     "title": "Cart",
@@ -84,7 +103,7 @@
     "name": "Your name",
     "phone": "Phone number",
     "payWithCard": "Pay with card",
-    "placeOrder": "Place order",
+    "placeOrder": "Confirm order",
     "myOrders": "My Orders",
     "orderId": "Order ID",
     "orderDate": "Date",
@@ -101,7 +120,25 @@
     "paymentPaid": "Paid",
     "paymentPending": "Pending",
     "paymentFailed": "Failed",
-    "itemsCount": "items"
+    "itemsCount": "items",
+    "subtotal": "Subtotal",
+    "serviceType": "Service type",
+    "pickupFromStore": "Pickup from store",
+    "discount": "Discount",
+    "none": "None",
+    "tax": "Tax (VAT)",
+    "included": "Included in price",
+    "trustSafeTitle": "Secure payment guarantee",
+    "trustSafeDesc": "Your information is 100% protected",
+    "trustEasyTitle": "Easy returns",
+    "trustEasyDesc": "Can be returned within 14 days",
+    "paymentCardTitle": "Pay by card",
+    "paymentCardDesc": "Online via inPAY",
+    "paymentCashTitle": "Pickup from store",
+    "paymentCashDesc": "Payment at the pickup point",
+    "secureNote": "Your information is safe and protected",
+    "currency": "sum",
+    "errorGeneric": "Something went wrong"
   },
   "auth": {
     "signin": "Sign In",
@@ -112,7 +149,10 @@
     "phone": "Phone",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
-    "loginRequired": "Please sign up or sign in to continue"
+    "loginRequired": "Please sign up or sign in to continue",
+    "errorGeneric": "Something went wrong",
+    "loading": "Loading...",
+    "or": "OR"
   },
   "admin": {
     "dashboard": "Dashboard",
@@ -131,7 +171,8 @@
     "dark": "Dark"
   },
   "footer": {
-    "rights": "All rights reserved"
+    "rights": "All rights reserved",
+    "description": "{{storeName}} — a modern, high-quality and stylish clothing store with the best selection."
   },
   "wishlist": {
     "title": "Wishlist",
@@ -139,6 +180,17 @@
     "emptyDesc": "Save products by tapping the heart icon in the shop",
     "remove": "Remove",
     "moveToCart": "Add to Cart"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Have questions? We’re happy to help. Send us a message and we’ll get back to you shortly.",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "message": "Message",
+    "submit": "Send Message",
+    "success": "Your message has been sent."
   },
   "toast": {
     "addedToCart": "\"{{name}}\" added to cart",

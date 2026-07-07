@@ -1,4 +1,14 @@
 {
+  "common": {
+    "storeName": "Velora",
+    "currency": "сум",
+    "brand": "Бренд",
+    "color": "Цвет",
+    "size": "Размер",
+    "wishlist": "Избранное",
+    "actions": "Действия",
+    "reviews": "{{count}} отзывов"
+  },
   "nav": {
     "home": "Главная",
     "shop": "Магазин",
@@ -40,7 +50,11 @@
     "newsletterDesc": "Узнавайте первыми",
     "newsletterPlaceholder": "Ваш email...",
     "newsletterButton": "Подписаться",
-    "newsletterThanks": "Спасибо! Скоро пришлём новости."
+    "newsletterThanks": "Спасибо! Скоро пришлём новости.",
+    "heroImageAlt": "Коллекция Velora",
+    "categoryWomen": "Женщины",
+    "categoryMen": "Мужчины",
+    "categoryCar": "Авто"
   },
   "shop": {
     "title": "Магазин",
@@ -72,7 +86,12 @@
     "back": "Назад",
     "details": "Детали",
     "category": "Категория",
-    "stock": "На складе"
+    "stock": "На складе",
+    "share": "Поделиться",
+    "wishlist": "Избранное",
+    "notFound": "Товар не найден",
+    "inStockWithCount": "В наличии ({{count}})",
+    "outOfStock": "Нет в наличии"
   },
   "cart": {
     "title": "Корзина",
@@ -101,7 +120,25 @@
     "paymentPaid": "Оплачено",
     "paymentPending": "В ожидании",
     "paymentFailed": "Неуспешно",
-    "itemsCount": "товара"
+    "itemsCount": "товара",
+    "subtotal": "Промежуточный итог",
+    "serviceType": "Способ получения",
+    "pickupFromStore": "Самовывоз из магазина",
+    "discount": "Скидка",
+    "none": "Нет",
+    "tax": "Налог (НДС)",
+    "included": "Включено в цену",
+    "trustSafeTitle": "Гарантия безопасной оплаты",
+    "trustSafeDesc": "Ваши данные на 100% защищены",
+    "trustEasyTitle": "Удобный возврат",
+    "trustEasyDesc": "Возврат возможен в течение 14 дней",
+    "paymentCardTitle": "Оплатить картой",
+    "paymentCardDesc": "Онлайн через inPAY",
+    "paymentCashTitle": "Самовывоз из магазина",
+    "paymentCashDesc": "Оплата при получении",
+    "secureNote": "Ваши данные в безопасности и защищены",
+    "currency": "сум",
+    "errorGeneric": "Что-то пошло не так"
   },
   "auth": {
     "signin": "Войти",
@@ -112,7 +149,10 @@
     "phone": "Телефон",
     "noAccount": "Нет аккаунта?",
     "haveAccount": "Уже есть аккаунт?",
-    "loginRequired": "Зарегистрируйтесь или войдите, чтобы продолжить"
+    "loginRequired": "Зарегистрируйтесь или войдите, чтобы продолжить",
+    "errorGeneric": "Что-то пошло не так",
+    "loading": "Загрузка...",
+    "or": "ИЛИ"
   },
   "admin": {
     "dashboard": "Панель управления",
@@ -131,7 +171,8 @@
     "dark": "Тёмная"
   },
   "footer": {
-    "rights": "Все права защищены"
+    "rights": "Все права защищены",
+    "description": "{{storeName}} — современный, качественный и стильный магазин одежды с лучшим выбором."
   },
   "wishlist": {
     "title": "Избранное",
@@ -139,6 +180,17 @@
     "emptyDesc": "Сохраняйте товары нажатием на сердечко в магазине",
     "remove": "Удалить",
     "moveToCart": "В корзину"
+  },
+  "contact": {
+    "title": "Свяжитесь с нами",
+    "description": "Есть вопросы? Мы всегда рады помочь. Напишите нам, и мы ответим в ближайшее время.",
+    "name": "Имя",
+    "email": "Email",
+    "phone": "Телефон",
+    "address": "Адрес",
+    "message": "Сообщение",
+    "submit": "Отправить сообщение",
+    "success": "Ваше сообщение отправлено."
   },
   "toast": {
     "addedToCart": "\"{{name}}\" добавлен в корзину",

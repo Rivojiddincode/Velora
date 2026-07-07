@@ -1,7 +1,9 @@
 ﻿import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./Contact.css";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
@@ -20,19 +22,19 @@ const Contact = () => {
     <div className="contact-page">
       <div className="contact-grid">
         <div className="contact-info">
-          <h1>Contact Us</h1>
-          <p>Have questions? We’re happy to help. Send us a message and we’ll get back to you shortly.</p>
+          <h1>{t("contact.title")}</h1>
+          <p>{t("contact.description")}</p>
           <div className="contact-details">
             <div>
-              <strong>Email</strong>
+              <strong>{t("contact.email")}</strong>
               <p>support@velora.com</p>
             </div>
             <div>
-              <strong>Phone</strong>
+              <strong>{t("contact.phone")}</strong>
               <p>+1 (555) 123-4567</p>
             </div>
             <div>
-              <strong>Address</strong>
+              <strong>{t("contact.address")}</strong>
               <p>123 Market Street, Suite 400, New York, NY</p>
             </div>
           </div>
@@ -40,11 +42,11 @@ const Contact = () => {
 
         <form className="contact-form" onSubmit={handleSubmit}>
           <label>
-            Name
+            {t("contact.name")}
             <input name="name" value={formData.name} onChange={handleChange} required />
           </label>
           <label>
-            Email
+            {t("contact.email")}
             <input
               name="email"
               type="email"
@@ -54,7 +56,7 @@ const Contact = () => {
             />
           </label>
           <label>
-            Message
+            {t("contact.message")}
             <textarea
               name="message"
               value={formData.message}
@@ -65,10 +67,10 @@ const Contact = () => {
           </label>
 
           <button type="submit" className="primary-button">
-            Send Message
+            {t("contact.submit")}
           </button>
 
-          {submitted && <p className="success-message">Your message has been sent.</p>}
+          {submitted && <p className="success-message">{t("contact.success")}</p>}
         </form>
       </div>
     </div>

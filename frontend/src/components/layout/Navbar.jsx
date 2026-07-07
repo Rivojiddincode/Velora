@@ -26,7 +26,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <span className="logo-text">Velora</span>
+          <span className="logo-text">{t('common.storeName')}</span>
         </Link>
 
         <div

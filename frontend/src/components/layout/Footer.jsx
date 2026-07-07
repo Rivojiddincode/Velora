@@ -25,9 +25,9 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-section footer-brand">
-            <h3 className="footer-logo">{settings?.storeName || 'Velora'}</h3>
+            <h3 className="footer-logo">{settings?.storeName || t('common.storeName')}</h3>
             <p className="footer-description">
-              Velora — zamonaviy, sifatli va uslubli kiyimlar uchun eng yaxshi tanlov.
+              {t('footer.description', { storeName: settings?.storeName || t('common.storeName') })}
             </p>
             <div className="footer-social">
               <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-link" aria-label="Instagram">
