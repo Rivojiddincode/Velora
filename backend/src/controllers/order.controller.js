@@ -61,4 +61,20 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, getMyOrders, getAllOrders, updateOrderStatus };
+// PUT /api/orders/:id/payment-status (admin) — punktda naqd/karta to'lovini qo'lda belgilash uchun
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const { paymentStatus } = req.body;
+    const allowed = ["pending", "paid", "failed"];
+    if (!allowed.includes(paymentStatus)) {
+      return res.status(400).json({ message: "Noto'g'ri to'lov holati" });
+    }
+    const order = await Order.findByIdAndUpdate(req.params.id, { paymentStatus }, { new: true });
+    if (!order) return res.status(404).json({ message: "Buyurtma topilmadi" });
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createOrder, getMyOrders, getAllOrders, updateOrderStatus, updatePaymentStatus };

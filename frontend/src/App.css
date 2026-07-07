@@ -242,11 +242,26 @@ textarea::placeholder {
 input:focus,
 textarea:focus,
 select:focus {
-    outline: none;
-    border-color: var(--primary-gold);
-    background: var(--input-bg-focus);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-}
+     outline: none;
+     border-color: var(--primary-gold);
+     background: var(--input-bg-focus);
+     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+ }
+
+ option {
+     background: var(--secondary-bg);
+     color: var(--text-primary);
+ }
+
+ [data-theme="light"] option {
+     background: var(--secondary-bg);
+     color: var(--text-primary);
+ }
+
+ [data-theme="dark"] option {
+     background: #1f1f1f;
+     color: #f8fafc;
+ }
 
 /* ============================================
    CARDS & CONTAINERS

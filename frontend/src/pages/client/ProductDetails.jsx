@@ -14,6 +14,7 @@ import {
   RiMapPinLine,
   RiHeadphoneLine,
   RiArrowLeftLine,
+  RiMore2Fill,
 } from "react-icons/ri";
 import { getProductById, resolveImages } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
@@ -33,6 +34,7 @@ const ProductDetails = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [actionOpen, setActionOpen] = useState(false);
 
   useEffect(() => {
     setProduct(null);
@@ -123,29 +125,51 @@ const ProductDetails = () => {
           <div className="pd-top-row">
             {product.brand && <span className="pd-badge">★ {product.brand}</span>}
             <div className="pd-top-actions">
-              <button type="button" className="pd-link-btn">
-                <RiShareLine /> Share
-              </button>
-              <button
-                type="button"
-                className="pd-link-btn"
-                onClick={() =>
-                  toggleWishlist({
-                    _id: product._id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    category: product.category,
-                    brand: product.brand,
-                  })
-                }
-              >
-                {isWishlisted(product._id) ? <RiHeartFill /> : <RiHeartLine />} Wishlist
-              </button>
-            </div>
-          </div>
+              <div className="pd-action-dropdown">
+                <button
+                  type="button"
+                  className="pd-action-toggle"
+                  onClick={() => setActionOpen((v) => !v)}
+                  aria-label="Actions"
+                >
+                  <RiMore2Fill />
+                </button>
+                {actionOpen && (
+                  <div className="pd-action-menu">
+                    <button
+                      type="button"
+                      className="pd-action-item"
+                      onClick={() => {
+                        setActionOpen(false);
+                        navigator.clipboard?.writeText(window.location.href);
+                      }}
+                    >
+                      <RiShareLine /> {t("product.share")}
+                    </button>
+                    <button
+                      type="button"
+                      className="pd-action-item"
+                      onClick={() => {
+                        toggleWishlist({
+                          _id: product._id,
+                          name: product.name,
+                          price: product.price,
+                          image: product.image,
+                          category: product.category,
+                          brand: product.brand,
+                        });
+                        setActionOpen(false);
+                      }}
+                    >
+                      {isWishlisted(product._id) ? <RiHeartFill /> : <RiHeartLine />} {t("product.wishlist")}
+                    </button>
+                  </div>
+                )}
+               </div>
+             </div>
+           </div>
 
-          <h1>{product.name}</h1>
+           <h1>{product.name}</h1>
           {product.description && <p className="pd-subtitle">{product.description}</p>}
 
           <div className="pd-meta-row">

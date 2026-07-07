@@ -19,16 +19,12 @@ export const getProductById = async (id) => {
 };
 
 export const createProduct = async (formData) => {
-  const { data } = await api.post("/products", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  const { data } = await api.post("/products", formData);
   return data;
 };
 
 export const updateProduct = async (id, formData) => {
-  const { data } = await api.put(`/products/${id}`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  const { data } = await api.put(`/products/${id}`, formData);
   return data;
 };
 

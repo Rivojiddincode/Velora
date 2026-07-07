@@ -16,15 +16,13 @@ import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import "./Shop.css";
 
-const SIZE_OPTIONS = ["S", "M", "L", "XL", "XXL"];
-
 const Shop = () => {
   const { t } = useTranslation();
   const { addToCart } = useCart();
   const { isWishlisted, toggleWishlist } = useWishlist();
 
   const [searchParams] = useSearchParams();
-  const [meta, setMeta] = useState({ categories: [], ageGroups: [], colors: [], priceMin: 0, priceMax: 0, total: 0 });
+  const [meta, setMeta] = useState({ categories: [], ageGroups: [], colors: [], sizes: [], priceMin: 0, priceMax: 0, total: 0 });
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -201,21 +199,23 @@ const Shop = () => {
             </div>
           )}
 
-          <div className="sidebar-section">
-            <h3>{t("shop.size")}</h3>
-            <div className="size-chips">
-              {SIZE_OPTIONS.map((size) => (
-                <button
-                  key={size}
-                  type="button"
-                  className={selectedSizes.includes(size) ? "size-chip active" : "size-chip"}
-                  onClick={() => toggleSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
+          {meta.sizes.length > 0 && (
+            <div className="sidebar-section">
+              <h3>{t("shop.size")}</h3>
+              <div className="size-chips">
+                {meta.sizes.map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    className={selectedSizes.includes(size) ? "size-chip active" : "size-chip"}
+                    onClick={() => toggleSize(size)}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <button type="button" className="reset-filters-btn" onClick={resetFilters}>
             <RiRefreshLine /> {t("shop.resetFilters")}

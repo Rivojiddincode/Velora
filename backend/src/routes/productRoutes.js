@@ -19,11 +19,15 @@ const parseArrayField = (value) => {
   }
 };
 
-// GET /api/products/filters — sidebar uchun kategoriya/rang/narx statistikasi
+// O'lchamlarni har doim katta harfda saqlaymiz (S, M, L, XL...) — shuning uchun
+// admin "s" yozsa ham, "S" yozsa ham, Shop'dagi filtr bilan mos keladi.
+const normalizeSizes = (arr) => arr.map((s) => s.trim().toUpperCase()).filter(Boolean);
+
+// GET /api/products/filters — sidebar uchun kategoriya/rang/o'lcham/narx statistikasi
 // DIQQAT: bu /:id dan OLDIN turishi shart, aks holda "filters" ID sifatida qabul qilinadi
 router.get("/filters", async (req, res) => {
   try {
-    const [categories, ageGroups, colorsAgg, priceStats] = await Promise.all([
+    const [categories, ageGroups, colorsAgg, sizesAgg, priceStats] = await Promise.all([
       Product.aggregate([
         { $match: { category: { $ne: "" } } },
         { $group: { _id: "$category", count: { $sum: 1 } } },
@@ -35,6 +39,11 @@ router.get("/filters", async (req, res) => {
         { $group: { _id: "$colors" } },
       ]),
       Product.aggregate([
+        { $unwind: "$sizes" },
+        { $group: { _id: "$sizes" } },
+        { $sort: { _id: 1 } },
+      ]),
+      Product.aggregate([
         { $group: { _id: null, min: { $min: "$price" }, max: { $max: "$price" } } },
       ]),
     ]);
@@ -43,6 +52,7 @@ router.get("/filters", async (req, res) => {
       categories: categories.map((c) => ({ name: c._id, count: c.count })),
       ageGroups: ageGroups.map((a) => ({ name: a._id, count: a.count })),
       colors: colorsAgg.map((c) => c._id),
+      sizes: sizesAgg.map((s) => s._id),
       priceMin: priceStats[0]?.min || 0,
       priceMax: priceStats[0]?.max || 0,
       total: await Product.countDocuments(),
@@ -80,7 +90,7 @@ router.get("/", async (req, res) => {
     }
     if (search) filter.name = { $regex: search, $options: "i" };
     if (colors) filter.colors = { $in: colors.split(",") };
-    if (sizes) filter.sizes = { $in: sizes.split(",") };
+    if (sizes) filter.sizes = { $in: sizes.split(",").map((s) => s.trim().toUpperCase()) };
 
     let sortOption = { createdAt: -1 };
     if (sort === "price_asc") sortOption = { price: 1 };
@@ -125,7 +135,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", authMiddleware, adminMiddleware, upload.array("images", 5), async (req, res) => {
   try {
     const data = { ...req.body };
-    if (data.sizes) data.sizes = parseArrayField(data.sizes);
+    if (data.sizes) data.sizes = normalizeSizes(parseArrayField(data.sizes));
     if (data.colors) data.colors = parseArrayField(data.colors);
 
     if (req.files && req.files.length > 0) {
@@ -144,7 +154,7 @@ router.post("/", authMiddleware, adminMiddleware, upload.array("images", 5), asy
 router.put("/:id", authMiddleware, adminMiddleware, upload.array("images", 5), async (req, res) => {
   try {
     const data = { ...req.body };
-    if (data.sizes) data.sizes = parseArrayField(data.sizes);
+    if (data.sizes) data.sizes = normalizeSizes(parseArrayField(data.sizes));
     if (data.colors) data.colors = parseArrayField(data.colors);
 
     if (req.files && req.files.length > 0) {
