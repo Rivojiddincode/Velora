@@ -172,7 +172,8 @@
   },
   "footer": {
     "rights": "Barcha huquqlar himoyalangan",
-    "description": "{{storeName}} — zamonaviy, sifatli va uslubli kiyimlar uchun eng yaxshi tanlov."
+    "description": "{{storeName}} — zamonaviy, sifatli va uslubli kiyimlar uchun eng yaxshi tanlov.",
+    "address": "Toshkent sh., Amir Temur ko'chasi, 1-uy"
   },
   "wishlist": {
     "title": "Yoqtirganlarim",

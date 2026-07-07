@@ -74,7 +74,7 @@ const Footer = () => {
               </div>
               <div className="contact-item">
                 <FiMapPin className="contact-icon" />
-                <span>{settings?.pickupAddress || "Toshkent sh."}</span>
+                <span>{settings?.pickupAddress || t('footer.address')}</span>
               </div>
             </div>
           </div>

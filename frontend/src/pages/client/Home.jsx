@@ -27,6 +27,20 @@ const CATEGORY_IMAGES = {
   default: "https://images.unsplash.com/photo-1560243563-062bfc001d68?w=500&q=80",
 };
 
+const CATEGORY_FALLBACK_IMAGE = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+    <rect width="800" height="500" fill="#f5f5f5"/>
+    <rect x="60" y="70" width="680" height="360" rx="24" fill="#ffffff" stroke="#d9d9d9" stroke-width="3"/>
+    <rect x="120" y="150" width="220" height="140" rx="18" fill="#e8e8e8"/>
+    <rect x="380" y="150" width="280" height="24" rx="12" fill="#d9d9d9"/>
+    <rect x="380" y="195" width="220" height="18" rx="9" fill="#ececec"/>
+    <rect x="380" y="230" width="180" height="18" rx="9" fill="#ececec"/>
+    <circle cx="400" cy="360" r="54" fill="#f0f0f0" stroke="#cccccc" stroke-width="3"/>
+    <path d="M360 360c16-32 64-32 80 0" stroke="#999" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <text x="400" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#666">Velora</text>
+  </svg>
+`)}`;
+
 const HERO_IMAGES = [
   "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=900&q=80",
   "https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=900&q=80",
@@ -69,6 +83,10 @@ const Home = () => {
     if (normalized.includes("men") || normalized.includes("mujskoy") || normalized.includes("erkak") || normalized.includes("male") || normalized.includes("boy")) return CATEGORY_IMAGES.men;
     if (normalized.includes("car") || normalized.includes("avto") || normalized.includes("auto")) return CATEGORY_IMAGES.car;
     return CATEGORY_IMAGES.default;
+  };
+
+  const handleCategoryImageError = (event) => {
+    event.currentTarget.src = CATEGORY_FALLBACK_IMAGE;
   };
 
   useEffect(() => {
@@ -187,7 +205,7 @@ const Home = () => {
                 to={cat.type === "ageGroup" ? `/shop?ageGroup=${cat.key}` : `/shop?category=${encodeURIComponent(cat.key)}`}
                 className="category-card"
               >
-                <img src={getCategoryImage(cat.key)} alt={cat.label} />
+                <img src={getCategoryImage(cat.key)} alt={cat.label} onError={handleCategoryImageError} />
                 <div className="category-overlay">
                   <span className="category-name">{cat.label}</span>
                   <span className="category-count">

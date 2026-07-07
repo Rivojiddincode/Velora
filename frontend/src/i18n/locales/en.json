@@ -172,7 +172,8 @@
   },
   "footer": {
     "rights": "All rights reserved",
-    "description": "{{storeName}} — a modern, high-quality and stylish clothing store with the best selection."
+    "description": "{{storeName}} — a modern, high-quality and stylish clothing store with the best selection.",
+    "address": "Tashkent city, Amir Temur Street, 1"
   },
   "wishlist": {
     "title": "Wishlist",
