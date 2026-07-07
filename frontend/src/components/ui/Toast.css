@@ -83,12 +83,18 @@
 }
 
 .toast-close {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 1rem;
-  cursor: pointer;
-  flex-shrink: 0;
+   background: none;
+   border: none;
+   color: var(--text-muted);
+   font-size: 0.8rem;
+   width: 20px;
+   height: 20px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   flex-shrink: 0;
+   padding: 0;
 }
 
 .toast-close:hover {

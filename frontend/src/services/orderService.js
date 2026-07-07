@@ -20,6 +20,11 @@ export const updateOrderStatus = async (id, status) => {
   return data;
 };
 
+export const updatePaymentStatus = async (id, paymentStatus) => {
+  const { data } = await api.put(`/orders/${id}/payment-status`, { paymentStatus });
+  return data;
+};
+
 export const createPayment = async (orderId) => {
   const { data } = await api.post("/payments/create", { orderId });
   return data;

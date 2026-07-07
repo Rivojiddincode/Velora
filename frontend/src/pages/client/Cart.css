@@ -26,7 +26,7 @@
   font-weight: 600;
 }
 
-.cart-page>h1 {
+.cart-page > h1 {
   font-size: 2rem;
   margin: 0 0 1.75rem;
   color: var(--text-primary);
@@ -40,8 +40,54 @@
 }
 
 @media (max-width: 900px) {
+  .shop-sidebar, .cart-summary { position: static; }
+
   .cart-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .cart-page {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .cart-items-card {
+    padding: 1.1rem;
+  }
+
+  .cart-item {
+    flex-direction: column;
+  }
+
+  .cart-item img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .cart-item-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .cart-item-price-block {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cart-trust-row {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .trust-divider {
+    display: none;
+  }
+
+  .cart-summary {
+    padding: 1.25rem;
   }
 }
 
@@ -159,27 +205,24 @@
 }
 
 .cart-item-close {
-  background: var(--input-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: all 0.25s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: var(--transition);
 }
 
 .cart-item-close:hover {
-  background: var(--error);
-  border-color: var(--error);
-  color: #fff;
-  transform: translateY(-1px);
+  color: var(--error);
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .cart-item-bottom {
@@ -187,7 +230,6 @@
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
-  gap: 1rem;
 }
 
 .cart-item-qty {
@@ -220,7 +262,7 @@
 .cart-item-price-block {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .cart-item-price {
@@ -233,25 +275,19 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.18);
+  background: none;
+  border: none;
   color: var(--error);
-  font-size: 0.84rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 999px;
-  padding: 0.55rem 0.8rem;
-  transition: all 0.25s ease;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: var(--transition);
 }
 
 .cart-item-remove:hover {
-  background: rgba(239, 68, 68, 0.18);
-  border-color: rgba(239, 68, 68, 0.35);
-  transform: translateY(-1px);
-}
-
-.cart-item-remove svg {
-  font-size: 1rem;
+  background: rgba(239, 68, 68, 0.08);
 }
 
 /* Trust row */
@@ -264,7 +300,7 @@
   padding: 1.25rem 1.5rem;
 }
 
-.cart-trust-row>div {
+.cart-trust-row > div:not(.trust-divider) {
   flex: 1;
   display: flex;
   align-items: flex-start;
@@ -289,6 +325,7 @@
 }
 
 .trust-divider {
+  flex: 0 0 1px;
   width: 1px;
   align-self: stretch;
   background: var(--border-color);
@@ -445,4 +482,51 @@
 
 .secure-note svg {
   color: var(--success);
+}
+
+/* Payment method selector */
+.payment-method-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border-light);
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition);
+}
+
+.payment-option svg {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.payment-option strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+}
+
+.payment-option span {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.payment-option.active {
+  border-color: var(--primary-gold);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.payment-option.active svg {
+  color: var(--primary-gold);
 }

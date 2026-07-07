@@ -30,6 +30,7 @@ const Cart = () => {
   const [pickupAddress, setPickupAddress] = useState("");
   const [customerName, setCustomerName] = useState(user?.name || "");
   const [customerPhone, setCustomerPhone] = useState(user?.phone || "");
+  const [paymentMethod, setPaymentMethod] = useState("card");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -59,17 +60,21 @@ const Cart = () => {
         pickupAddress,
         customerName,
         customerPhone,
-        paymentMethod: "card",
+        paymentMethod,
       });
 
-      const payment = await createPayment(order._id);
-      clearCart();
-
-      if (payment.paymentUrl) {
-        window.location.href = payment.paymentUrl;
+      if (paymentMethod === "card") {
+        const payment = await createPayment(order._id);
+        clearCart();
+        if (payment.paymentUrl) {
+          window.location.href = payment.paymentUrl;
+          return;
+        }
       } else {
-        navigate("/", { state: { orderPlaced: true } });
+        clearCart();
       }
+
+      navigate("/my-orders", { state: { orderPlaced: true } });
     } catch (err) {
       setError(err.response?.data?.message || "Xatolik yuz berdi");
     } finally {
@@ -253,8 +258,39 @@ const Cart = () => {
 
             {error && <div className="form-error">{error}</div>}
 
+            <label className="checkout-field">{t("cart.checkout")}</label>
+            <div className="payment-method-options">
+              <button
+                type="button"
+                className={paymentMethod === "card" ? "payment-option active" : "payment-option"}
+                onClick={() => setPaymentMethod("card")}
+              >
+                <RiLockLine />
+                <div>
+                  <strong>Karta orqali to'lash</strong>
+                  <span>inPAY orqali onlayn</span>
+                </div>
+              </button>
+              <button
+                type="button"
+                className={paymentMethod === "cash" ? "payment-option active" : "payment-option"}
+                onClick={() => setPaymentMethod("cash")}
+              >
+                <RiMapPinLine />
+                <div>
+                  <strong>Punktdan olib ketish</strong>
+                  <span>To'lov punktda amalga oshiriladi</span>
+                </div>
+              </button>
+            </div>
+
             <button className="pay-button" onClick={handleCheckout} disabled={submitting}>
-              <RiLockLine /> {submitting ? "..." : t("cart.payWithCard")}
+              {paymentMethod === "card" ? <RiLockLine /> : <RiMapPinLine />}
+              {submitting
+                ? "..."
+                : paymentMethod === "card"
+                ? t("cart.payWithCard")
+                : "Buyurtmani tasdiqlash"}
             </button>
 
             <p className="secure-note">
