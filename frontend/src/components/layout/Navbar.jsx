@@ -81,10 +81,6 @@ const Navbar = () => {
                 <RiFileList3Line />
               </Link>
             )}
-            <div className="navbar-desktop-tools">
-              <LanguageSwitcher />
-              <ThemeToggle />
-            </div>
             {user ? (
               <button type="button" className="navbar-btn navbar-btn-primary" onClick={handleSignout}>
                 {t('nav.signout')}
@@ -94,6 +90,10 @@ const Navbar = () => {
                 {t('nav.signin')}
               </Link>
             )}
+            <div className="navbar-desktop-tools">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
           </div>
         </div>
 
