@@ -70,12 +70,12 @@ const Navbar = () => {
             <RiShoppingCart2Line />
             {count > 0 && <span className="cart-badge">{count}</span>}
           </Link>
+          <Link to="/wishlist" className="navbar-btn navbar-icon-btn" title={t('nav.wishlist')} onClick={closeMenu}>
+            <RiHeartLine />
+            {wishlistCount > 0 && <span className="cart-badge">{wishlistCount}</span>}
+          </Link>
 
           <div className="navbar-desktop-only">
-            <Link to="/wishlist" className="navbar-btn navbar-icon-btn" title={t('nav.wishlist')} onClick={closeMenu}>
-              <RiHeartLine />
-              {wishlistCount > 0 && <span className="cart-badge">{wishlistCount}</span>}
-            </Link>
             {user && (
               <Link to="/my-orders" className="navbar-btn navbar-icon-btn" title={t('nav.myOrders')} onClick={closeMenu}>
                 <RiFileList3Line />
