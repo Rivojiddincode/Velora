@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { RiEyeLine, RiEyeOffLine, RiMailLine, RiLockLine } from "react-icons/ri";
 import { useAuth } from "../../context/AuthContext";
-import "./SignIn.css";
+import "./Signin.css";
 
 const SignIn = () => {
   const navigate = useNavigate();
