@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { RiGlobalLine } from "react-icons/ri";
+import { RiGlobalLine, RiArrowDownSLine, RiCheckLine } from "react-icons/ri";
 import "./LanguageSwitcher.css";
 
 const LANGS = [
@@ -26,12 +26,19 @@ const LanguageSwitcher = () => {
 
   return (
     <div className="lang-switcher" ref={ref}>
-      <button type="button" className="lang-switcher-btn" onClick={() => setOpen((o) => !o)}>
-        <RiGlobalLine />
+      <button
+        type="button"
+        className={`lang-switcher-btn ${open ? "open" : ""}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <RiGlobalLine className="lang-switcher-icon" />
         <span>{current.code.toUpperCase()}</span>
+        <RiArrowDownSLine className={`lang-switcher-caret ${open ? "open" : ""}`} />
       </button>
       {open && (
-        <ul className="lang-switcher-menu">
+        <ul className="lang-switcher-menu" role="listbox">
           {LANGS.map((l) => (
             <li key={l.code}>
               <button
@@ -42,7 +49,8 @@ const LanguageSwitcher = () => {
                   setOpen(false);
                 }}
               >
-                {l.label}
+                <span>{l.label}</span>
+                {l.code === i18n.language && <RiCheckLine className="lang-switcher-check" />}
               </button>
             </li>
           ))}
