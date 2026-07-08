@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { RiShoppingCart2Line, RiHeartLine, RiFileList3Line } from 'react-icons/ri';
+import { RiShoppingCart2Line, RiHeartLine, RiFileList3Line, RiLogoutBoxRLine, RiLoginBoxLine } from 'react-icons/ri';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -17,8 +17,11 @@ const Navbar = () => {
   const { count: wishlistCount } = useWishlist();
   const navigate = useNavigate();
 
+  const closeMenu = () => setIsOpen(false);
+
   const handleSignout = () => {
     signout();
+    closeMenu();
     navigate('/');
   };
 
@@ -40,37 +43,72 @@ const Navbar = () => {
 
         <ul className={`navbar-menu ${isOpen ? 'active' : ''}`}>
           <li className="navbar-item">
-            <Link to="/" className="navbar-link" onClick={() => setIsOpen(false)}>
+            <Link to="/" className="navbar-link" onClick={closeMenu}>
               {t('nav.home')}
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/shop" className="navbar-link" onClick={() => setIsOpen(false)}>
+            <Link to="/shop" className="navbar-link" onClick={closeMenu}>
               {t('nav.shop')}
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/contact" className="navbar-link" onClick={() => setIsOpen(false)}>
+            <Link to="/contact" className="navbar-link" onClick={closeMenu}>
               {t('nav.contact')}
             </Link>
           </li>
-          {user && (
-            <li className="navbar-item">
-              <Link to="/my-orders" className="navbar-link" onClick={() => setIsOpen(false)}>
-                {t('nav.myOrders')}
-              </Link>
-            </li>
-          )}
           {user?.role === 'admin' && (
             <li className="navbar-item">
-              <Link to="/admin" className="navbar-link" onClick={() => setIsOpen(false)}>
+              <Link to="/admin" className="navbar-link" onClick={closeMenu}>
                 {t('nav.admin')}
               </Link>
             </li>
           )}
+
           <li className="navbar-mobile-tools">
             <LanguageSwitcher />
             <ThemeToggle />
+          </li>
+
+          <li className="navbar-mobile-divider" />
+
+          <li>
+            <Link to="/cart" className="navbar-mobile-row" onClick={closeMenu}>
+              <RiShoppingCart2Line />
+              <span>{t('nav.cart')}</span>
+              {count > 0 && <span className="row-badge">{count}</span>}
+            </Link>
+          </li>
+          <li>
+            <Link to="/wishlist" className="navbar-mobile-row" onClick={closeMenu}>
+              <RiHeartLine />
+              <span>{t('nav.wishlist')}</span>
+              {wishlistCount > 0 && <span className="row-badge">{wishlistCount}</span>}
+            </Link>
+          </li>
+          {user && (
+            <li>
+              <Link to="/my-orders" className="navbar-mobile-row" onClick={closeMenu}>
+                <RiFileList3Line />
+                <span>{t('nav.myOrders')}</span>
+              </Link>
+            </li>
+          )}
+
+          <li className="navbar-mobile-divider" />
+
+          <li>
+            {user ? (
+              <button type="button" className="navbar-mobile-row navbar-mobile-signout" onClick={handleSignout}>
+                <RiLogoutBoxRLine />
+                <span>{t('nav.signout')}</span>
+              </button>
+            ) : (
+              <Link to="/signin" className="navbar-mobile-row navbar-mobile-signout" onClick={closeMenu}>
+                <RiLoginBoxLine />
+                <span>{t('nav.signin')}</span>
+              </Link>
+            )}
           </li>
         </ul>
 

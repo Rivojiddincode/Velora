@@ -192,96 +192,131 @@
         display: flex;
     }
 
-    .navbar-desktop-tools {
+    /* Mobilda tepadagi ikonalar qatori (savat/sevimlilar/buyurtmalar/chiqish)
+       butunlay yashiriladi — ular endi hamburger dropdown ichida ro'yxat
+       ko'rinishida chiqadi (navbar-mobile-row). */
+    .navbar-actions {
+        display: none !important;
+    }
+
+    .navbar-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--secondary-bg);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        justify-content: flex-start;
+        padding: 0;
+    }
+
+    .navbar-menu.active {
+        max-height: 520px;
+        overflow-y: auto;
+        padding: 0.5rem 0;
+    }
+
+    .navbar-item {
+        width: 100%;
+    }
+
+    .navbar-link {
+        display: block;
+        padding: 0.85rem 1.25rem;
+        text-align: left;
+        font-size: 0.92rem;
+    }
+
+    .navbar-link::after {
         display: none;
     }
 
-.navbar-mobile-tools {
-       display: flex;
-       align-items: center;
-       gap: 0.75rem;
-       padding: 1rem 1.5rem;
-       border-bottom: 1px solid var(--border-color);
-       background: var(--secondary-bg);
-     }
-
-.navbar-menu {
-         position: absolute;
-         top: 100%;
-         left: 0;
-         right: 0;
-         flex-direction: column;
-         gap: 0;
-         background: var(--secondary-bg);
-         backdrop-filter: blur(10px);
-         border-bottom: 1px solid var(--border-color);
-         max-height: 0;
-         overflow: hidden;
-         transition: max-height 0.3s ease;
-         justify-content: flex-start;
-         padding: 0;
-     }
-
-     .navbar-menu.active {
-         max-height: 300px;
-         padding: 1rem 0;
-     }
-
-     .navbar-item {
-         width: 100%;
-         border-bottom: 1px solid var(--border-color);
-     }
-
-     .navbar-link {
-         display: block;
-         padding: 1rem 1.5rem;
-         text-align: left;
-     }
-
-     .navbar-link::after {
-         display: none;
-     }
-
-     .navbar-link:hover {
-         background: rgba(184, 134, 11, 0.1);
-         padding-left: 2rem;
-     }
-
-     .navbar-actions {
-         display: none;
-         position: absolute;
-         top: 100%;
-         right: 0;
-         flex-direction: column;
-         width: 100%;
-         gap: 0.5rem;
-         padding: 1rem;
-         background: var(--secondary-bg);
-         border-bottom: 1px solid var(--border-color);
-     }
-
-    .navbar-menu.active~.navbar-actions {
-        display: flex;
+    .navbar-link:hover {
+        background: var(--input-bg);
     }
 
-    .navbar-btn {
+    /* Til / tema qatori */
+    .navbar-mobile-tools {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.75rem 1.25rem;
+    }
+
+    /* Ajratuvchi chiziq */
+    .navbar-mobile-divider {
+        display: block;
+        height: 1px;
+        background: var(--border-color);
+        margin: 0.25rem 0;
+    }
+
+    /* Savat / Sevimlilar / Buyurtmalar / Chiqish qatorlari */
+    .navbar-mobile-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
         width: 100%;
-        padding: 0.75rem 1rem;
+        padding: 0.8rem 1.25rem;
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        font-size: 0.92rem;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .navbar-mobile-row svg {
+        font-size: 1.15rem;
+        color: var(--primary-gold);
+        flex-shrink: 0;
+    }
+
+    .navbar-mobile-row:hover {
+        background: var(--input-bg);
+    }
+
+    .row-badge {
+        margin-left: auto;
+        background: var(--primary-gold);
+        color: var(--primary-dark);
+        font-size: 0.7rem;
+        font-weight: 700;
+        min-width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 5px;
+    }
+
+    .navbar-mobile-signout {
+        font-weight: 700;
+    }
+
+    .navbar-mobile-signout svg {
+        color: var(--error);
     }
 }
 
 @media (max-width: 480px) {
     .navbar-container {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .logo-text {
-        font-size: 1.5rem;
-    }
-
-    .navbar-btn {
-        padding: 0.65rem 1rem;
-        font-size: 0.9rem;
+        font-size: 1.4rem;
     }
 
     .hamburger span {
@@ -315,6 +350,11 @@
 }
 
 .navbar-mobile-tools {
+  display: none;
+}
+
+.navbar-mobile-divider,
+.navbar-mobile-row {
   display: none;
 }
 
