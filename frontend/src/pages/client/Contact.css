@@ -53,3 +53,19 @@
     color: var(--secondary-bg);
     border: none;
 }
+@media (max-width: 900px) {
+    .contact-page .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-page {
+        padding: 1.25rem 1rem 3rem;
+    }
+
+    .contact-page .contact-form {
+        padding: 1.1rem;
+    }
+}

@@ -165,3 +165,37 @@
   color: var(--primary-gold);
   font-size: 1.05rem;
 }
+@media (max-width: 900px) {
+  .orders-page {
+    padding: 1.5rem 1.25rem 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .orders-page {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .order-card {
+    padding: 1rem;
+  }
+
+  .order-card-header {
+    gap: 0.85rem;
+  }
+
+  .order-status-badge {
+    margin-left: 0;
+  }
+
+  .order-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .order-item img {
+    width: 44px;
+    height: 44px;
+  }
+}

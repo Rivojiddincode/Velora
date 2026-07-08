@@ -23,7 +23,8 @@
 .main-content>* {
     max-width: 1400px;
     margin: 0 auto;
-    pagination: 0 1rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
     width: 100%;
 }
 

@@ -176,3 +176,24 @@ button:hover {
   font-size: 0.85rem;
   margin-bottom: 1rem;
 }
+
+@media (max-width: 768px) {
+  .signin {
+    padding: 2rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signin {
+    padding: 1.25rem 1rem;
+  }
+
+  .signin-card {
+    padding: 26px 20px;
+    border-radius: 18px;
+  }
+
+  .signin-card h1 {
+    font-size: 1.5rem;
+  }
+}
