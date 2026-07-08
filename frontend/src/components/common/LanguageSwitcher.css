@@ -99,6 +99,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+ 
 }
 
 .lang-switcher-menu li button:hover {

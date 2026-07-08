@@ -11,4 +11,11 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Bir xil telefon raqami faqat bir marta ro'yxatdan o'tishi uchun
+// (bo'sh stringlar bundan chiqit qilinadi, shuning uchun partial index)
+userSchema.index(
+  { phone: 1 },
+  { unique: true, partialFilterExpression: { phone: { $exists: true, $ne: "" } } }
+);
+
 module.exports = mongoose.model("User", userSchema);

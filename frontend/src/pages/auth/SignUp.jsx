@@ -23,6 +23,17 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    const phone = user.phone.trim();
+    if (!phone) {
+      setError(t("auth.phoneRequired"));
+      return;
+    }
+    if (!phone.startsWith("+")) {
+      setError(t("auth.phoneFormat"));
+      return;
+    }
+
     setLoading(true);
     try {
       const created = await signup(user);
@@ -72,6 +83,8 @@ function SignUp() {
               placeholder="+998 90 000 00 00"
               value={user.phone}
               onChange={(e) => setUser({ ...user, phone: e.target.value })}
+              required
+              pattern="\+[0-9]+"
             />
           </label>
 

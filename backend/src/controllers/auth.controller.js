@@ -18,13 +18,22 @@ const signup = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !phone) {
       return res.status(400).json({ message: "Barcha maydonlarni to'ldiring" });
     }
 
-    const existing = await User.findOne({ email: email.toLowerCase() });
-    if (existing) {
+    if (!/^\+/.test(phone)) {
+      return res.status(400).json({ message: "Telefon raqami '+' belgisidan boshlanishi kerak" });
+    }
+
+    const existingEmail = await User.findOne({ email: email.toLowerCase() });
+    if (existingEmail) {
       return res.status(400).json({ message: "Bu email allaqachon ro'yxatdan o'tgan" });
+    }
+
+    const existingPhone = await User.findOne({ phone });
+    if (existingPhone) {
+      return res.status(400).json({ message: "Bu telefon raqami allaqachon ro'yxatdan o'tgan" });
     }
 
     const hashed = await bcrypt.hash(password, 10);

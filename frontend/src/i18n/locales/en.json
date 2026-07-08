@@ -151,6 +151,9 @@
     "haveAccount": "Already have an account?",
     "loginRequired": "Please sign up or sign in to continue",
     "errorGeneric": "Something went wrong",
+    "phoneRequired": "Please enter your phone number",
+    "phoneFormat": "Phone number must start with '+'",
+    "phoneExists": "This phone number is already registered",
     "loading": "Loading...",
     "or": "OR"
   },

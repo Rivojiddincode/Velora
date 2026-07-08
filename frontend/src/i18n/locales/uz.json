@@ -151,6 +151,9 @@
     "haveAccount": "Akkountingiz bormi?",
     "loginRequired": "Davom etish uchun ro'yxatdan o'ting yoki tizimga kiring",
     "errorGeneric": "Xatolik yuz berdi",
+    "phoneRequired": "Telefon raqamini kiriting",
+    "phoneFormat": "Telefon raqami '+' belgisidan boshlanishi kerak",
+    "phoneExists": "Bu telefon raqami allaqachon ro'yxatdan o'tgan",
     "loading": "Yuklanmoqda...",
     "or": "YOKI"
   },
