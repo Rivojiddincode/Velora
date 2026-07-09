@@ -1,10 +1,23 @@
 const axios = require("axios");
 const Order = require("../models/Order");
 
+const API_BASE = process.env.INPAY_API_BASE || "https://inpay.uz/api/v1";
+
+// inPAY.uz rasmiy hujjatiga ko'ra 2 bosqichli oqim:
+// 1) GET /authorization?merchant_id=&merchant_token=  -> bearer_token olamiz
+// 2) POST /create (Bearer bilan)                       -> pay_url olamiz
+
+const getBearerToken = async () => {
+  const { data } = await axios.get(`${API_BASE}/authorization/`, {
+    params: {
+      merchant_id: process.env.INPAY_MERCHANT_ID,
+      merchant_token: process.env.INPAY_TOKEN,
+    },
+  });
+  return data?.bearer_token;
+};
+
 // POST /api/payments/create  (auth) — body: { orderId }
-// inPAY.uz REST API orqali to'lov yaratadi va mijozni to'lov sahifasiga yo'naltiradi.
-// ESLATMA: inPAY merchant kabinetidan olingan haqiqiy INPAY_TOKEN va INPAY_API_URL
-// backend/.env fayliga qo'yilgandan so'ng bu to'liq ishlaydi.
 const createPayment = async (req, res) => {
   try {
     const { orderId } = req.body;
@@ -14,42 +27,54 @@ const createPayment = async (req, res) => {
       return res.status(403).json({ message: "Ruxsat yo'q" });
     }
 
-    if (!process.env.INPAY_TOKEN) {
+    if (!process.env.INPAY_TOKEN || !process.env.INPAY_MERCHANT_ID) {
       return res.status(503).json({
         message:
-          "To'lov tizimi ulanmagan. Admin inPAY.uz orqali merchant hisobini ochib, INPAY_TOKEN ni .env fayliga qo'shishi kerak.",
+          "To'lov tizimi ulanmagan. Admin inPAY.uz kabinetidan Merchant ID va Token olib, .env fayliga qo'shishi kerak.",
       });
     }
 
-    const apiUrl = process.env.INPAY_API_URL || "https://inpay.uz/api/v1/payment";
+    // 1-qadam: bearer token olish
+    const bearerToken = await getBearerToken();
+    if (!bearerToken) {
+      return res.status(502).json({ message: "inPAY'dan avtorizatsiya tokeni olinmadi" });
+    }
 
+    // 2-qadam: to'lov yaratish
     const response = await axios.post(
-      apiUrl,
+      `${API_BASE}/create/`,
       {
+        merchant_id: Number(process.env.INPAY_MERCHANT_ID),
+        token: process.env.INPAY_TOKEN,
         amount: order.totalAmount,
-        currency: "UZS",
         description: `Buyurtma #${order._id}`,
+        payment_method: process.env.INPAY_PAYMENT_METHOD || "click",
         callback_url: `${process.env.SERVER_URL || "http://localhost:5000"}/api/payments/callback`,
         order_id: String(order._id),
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.INPAY_TOKEN}`,
+          Authorization: `Bearer ${bearerToken}`,
           "Content-Type": "application/json",
         },
       }
     );
 
-    const paymentUrl =
-      response.data?.payment_url || response.data?.url || response.data?.data?.url;
-    const transactionId = response.data?.id || response.data?.transaction_id || "";
+    const paymentUrl = response.data?.pay_url;
+    const transactionId = response.data?.transaction_id || response.data?.id || "";
 
     order.paymentTransactionId = transactionId;
     await order.save();
 
     res.json({ paymentUrl, transactionId, raw: response.data });
   } catch (error) {
-    res.status(500).json({ message: error.response?.data?.message || error.message });
+    // inPAY'dan kelgan aniq xato javobini konsolga chiqaramiz (masalan
+    // CALLBACK_NOT_WHITELISTED kabi) — debug qilishda foydali.
+    console.error("inPAY xatosi:", error.response?.data || error.message);
+    res.status(500).json({
+      message: error.response?.data?.message || error.message,
+      details: error.response?.data?.details,
+    });
   }
 };
 
