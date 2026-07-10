@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
+import { RiPencilLine, RiDeleteBin6Line } from "react-icons/ri";
+import "./Products.css";
 import {
   getProducts,
   createProduct,
@@ -127,10 +129,11 @@ const Products = () => {
 
   return (
     <div className="admin-page products-page">
-      <div className="page-header">
-        <h1>{t("admin.products")}</h1>
-        <button className="primary-button" onClick={openCreate}>
-          + {t("admin.add")}
+      <div className="products-header">
+        <h1 className="products-title">{t("admin.products")}</h1>
+        <button className="add-product-btn" onClick={openCreate}>
+          <span className="add-product-icon">+</span>
+          {t("admin.add")}
         </button>
       </div>
 
@@ -213,61 +216,87 @@ const Products = () => {
         </section>
       )}
 
-      <section className="table-card">
-        <div className="section-header">
-          <h2>{t("admin.products")}</h2>
-        </div>
-
+      <section className="products-card">
         {loading ? (
-          <p>...</p>
+          <div className="products-loading">...</div>
         ) : (
-          <div className="table-responsive">
-            <table className="admin-table">
+          <div className="products-table-wrap">
+            <table className="products-table">
               <thead>
                 <tr>
-                  <th></th>
-                  <th>Nomi</th>
-                  <th>Kategoriya</th>
-                  <th>Yosh</th>
-                  <th>Ombor</th>
-                  <th>Narx</th>
-                  <th>Tanlangan</th>
-                  <th></th>
+                  <th>Image</th>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Age Group</th>
+                  <th>Stock</th>
+                  <th>Price</th>
+                  <th>Featured</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredProducts.length === 0 ? (
                   <tr>
-                    <td colSpan={8} style={{ textAlign: "center", padding: "1rem" }}>
+                    <td colSpan={8} className="products-empty">
                       {t("admin.noResultsFound")}
                     </td>
                   </tr>
                 ) : (
-                  filteredProducts.map((product) => (
-                  <tr key={product._id}>
-                    <td>
-                      <img
-                        src={resolveImageUrl(product.image)}
-                        alt={product.name}
-                        style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 8 }}
-                      />
-                    </td>
-                    <td>{product.name}</td>
-                    <td>{product.category}</td>
-                    <td>{product.ageGroup === "kids" ? t("shop.kids") : t("shop.adults")}</td>
-                    <td>{product.stock}</td>
-                    <td>{product.price?.toLocaleString()} so'm</td>
-                    <td>{product.featured ? "⭐" : "—"}</td>
-                    <td className="flex" style={{ gap: "0.5rem" }}>
-                      <button className="btn-ghost" onClick={() => openEdit(product)}>
-                        {t("admin.edit")}
-                      </button>
-                      <button className="text-button" onClick={() => handleDelete(product._id)}>
-                        {t("admin.delete")}
-                      </button>
-                    </td>
-                  </tr>
-                  ))
+                  filteredProducts.map((product) => {
+                    const stock = Number(product.stock) || 0;
+                    const stockClass =
+                      stock > 10 ? "stock-green" : stock >= 1 ? "stock-yellow" : "stock-red";
+                    return (
+                      <tr key={product._id} className="products-row">
+                        <td data-label="Image" className="cell-image">
+                          <img
+                            src={resolveImageUrl(product.image)}
+                            alt={product.name}
+                            className="product-thumb"
+                          />
+                        </td>
+                        <td data-label="Product" className="cell-product">
+                          <span className="product-name">{product.name}</span>
+                          <span className="product-sub">
+                            {product.sku || (product.description ? product.description.slice(0, 48) : "—")}
+                          </span>
+                        </td>
+                        <td data-label="Category" className="cell-category">
+                          <span className="badge badge-category">{product.category}</span>
+                        </td>
+                        <td data-label="Age Group" className="cell-age">
+                          {product.ageGroup === "kids" ? t("shop.kids") : t("shop.adults")}
+                        </td>
+                        <td data-label="Stock" className="cell-stock">
+                          <span className={`badge ${stockClass}`}>{stock}</span>
+                        </td>
+                        <td data-label="Price" className="cell-price">
+                          {product.price?.toLocaleString()}
+                          <span className="price-cur">so'm</span>
+                        </td>
+                        <td data-label="Featured" className="cell-featured">
+                          {product.featured ? (
+                            <span className="featured-yes">⭐ Featured</span>
+                          ) : (
+                            <span className="featured-no">— Not Featured</span>
+                          )}
+                        </td>
+                        <td data-label="Actions" className="cell-actions">
+                          <div className="actions">
+                            <button className="action-btn action-edit" onClick={() => openEdit(product)}>
+                              <RiPencilLine /> {t("admin.edit")}
+                            </button>
+                            <button
+                              className="action-btn action-delete"
+                              onClick={() => handleDelete(product._id)}
+                            >
+                              <RiDeleteBin6Line /> {t("admin.delete")}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>
