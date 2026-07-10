@@ -526,6 +526,19 @@
     margin-left: 0;
     width: 100%;
     max-width: 100%;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .newsletter-form input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .newsletter-form button {
+    width: 100%;
+    flex-shrink: 0;
   }
 
   .newsletter-thanks {
