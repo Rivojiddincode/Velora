@@ -34,15 +34,15 @@ function AppRoutes() {
         <Route path="/signup" element={<SignUp />} />
       </Route>
 
-      {/* Client — Home is public, everything else requires sign in */}
+      {/* Client — public browsing + protected personal pages */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/contact" element={<Contact />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/wishlist" element={<Wishlist />} />
         </Route>
