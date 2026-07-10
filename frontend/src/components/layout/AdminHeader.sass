@@ -9,7 +9,7 @@ $gold-blur: rgba(212, 175, 55, .28)
 $bg: var(--secondary-bg)
 $text-bright: #F5F5F5
 $text-muted: var(--text-secondary)
-$input-bg: rgba(255, 255, 255, .03)
+$input-bg: var(--input-bg)
 $font: "Space Grotesk", sans-serif
 
 // ─── Header ───────────────────────────────────────────────
@@ -142,7 +142,7 @@ $font: "Space Grotesk", sans-serif
     outline: none
     background: $input-bg
     backdrop-filter: blur(14px)
-    color: $text-bright
+    color: var(--text-primary)
     font-size: 15px
     font-family: $font
     transition: border-color .35s, box-shadow .35s
