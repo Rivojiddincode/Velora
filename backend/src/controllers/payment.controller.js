@@ -21,6 +21,7 @@ const getBearerToken = async () => {
 const createPayment = async (req, res) => {
   try {
     const { orderId, gateway } = req.body;
+    console.log("[PAYMENT DEBUG] orderId:", orderId, "gateway:", gateway);
     const order = await Order.findById(orderId);
     if (!order) return res.status(404).json({ message: "Buyurtma topilmadi" });
     if (String(order.user) !== req.user.id) {
@@ -40,6 +41,9 @@ const createPayment = async (req, res) => {
       return res.status(502).json({ message: "inPAY'dan avtorizatsiya tokeni olinmadi" });
     }
 
+    const paymentMethod = (gateway && String(gateway).trim()) || process.env.INPAY_PAYMENT_METHOD || "click";
+    console.log("[PAYMENT DEBUG] payment_method yuborilmoqda:", paymentMethod);
+
     // 2-qadam: to'lov yaratish — gateway frontend'dan tanlanadi (Click/Payme/...),
     // agar yuborilmasa .env dagi standart qiymat ishlatiladi.
     const response = await axios.post(
@@ -49,7 +53,7 @@ const createPayment = async (req, res) => {
         token: process.env.INPAY_TOKEN,
         amount: order.totalAmount,
         description: `Buyurtma #${order._id}`,
-        payment_method: gateway || process.env.INPAY_PAYMENT_METHOD || "click",
+        payment_method: paymentMethod,
         callback_url: `${process.env.SERVER_URL || "http://localhost:5000"}/api/payments/callback`,
         order_id: String(order._id),
       },
@@ -60,6 +64,7 @@ const createPayment = async (req, res) => {
         },
       }
     );
+    console.log("[PAYMENT DEBUG] inPAY javobi:", response.data);
 
     const paymentUrl = response.data?.pay_url;
     const transactionId = response.data?.transaction_id || response.data?.id || "";
