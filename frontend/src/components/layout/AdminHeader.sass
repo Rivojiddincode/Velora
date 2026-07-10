@@ -140,15 +140,16 @@ $font: "Space Grotesk", sans-serif
     border: 1px solid $gold-dim
     border-radius: 14px
     outline: none
-    background: $input-bg
-    backdrop-filter: blur(14px)
+    background: var(--input-bg)
     color: var(--text-primary)
     font-size: 15px
     font-family: $font
-    transition: border-color .35s, box-shadow .35s
+    transition: border-color .35s, box-shadow .35s, background .35s
+    -webkit-text-fill-color: var(--text-primary)
+    caret-color: var(--primary-gold)
 
     &::placeholder
-      color: $text-muted
+      color: var(--text-muted)
 
     &:focus
       border-color: $gold-focus
@@ -191,3 +192,22 @@ $font: "Space Grotesk", sans-serif
   .admin-header
     .header-search
       display: none
+
+// ─── Theme overrides ────────────────────────────────────
+[data-theme="light"]
+  .admin-header
+    .header-search__input
+      backdrop-filter: none
+      background: rgba(0, 0, 0, 0.03)
+      border-color: rgba(0, 0, 0, 0.15)
+      color: #1a1a1a
+      -webkit-text-fill-color: #1a1a1a
+
+      &::placeholder
+        color: #6b7280
+
+[data-theme="dark"]
+  .admin-header
+    .header-search__input
+      backdrop-filter: blur(14px)
+      background: rgba(255, 255, 255, 0.04)
