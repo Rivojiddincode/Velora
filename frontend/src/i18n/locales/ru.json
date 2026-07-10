@@ -138,7 +138,8 @@
     "paymentCashDesc": "Оплата при получении",
     "secureNote": "Ваши данные в безопасности и защищены",
     "currency": "сум",
-    "errorGeneric": "Что-то пошло не так"
+    "errorGeneric": "Что-то пошло не так",
+    "chooseGateway": "Выберите платёжную систему"
   },
   "auth": {
     "signin": "Войти",

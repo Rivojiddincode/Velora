@@ -25,7 +25,7 @@ export const updatePaymentStatus = async (id, paymentStatus) => {
   return data;
 };
 
-export const createPayment = async (orderId) => {
-  const { data } = await api.post("/payments/create", { orderId });
+export const createPayment = async (orderId, gateway) => {
+  const { data } = await api.post("/payments/create", { orderId, gateway });
   return data;
 };

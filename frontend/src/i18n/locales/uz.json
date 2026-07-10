@@ -138,7 +138,8 @@
     "paymentCashDesc": "To'lov punktda amalga oshiriladi",
     "secureNote": "Sizning ma'lumotlaringiz xavfsiz va himoyalangan",
     "currency": "so'm",
-    "errorGeneric": "Xatolik yuz berdi"
+    "errorGeneric": "Xatolik yuz berdi",
+    "chooseGateway": "To'lov tizimini tanlang"
   },
   "auth": {
     "signin": "Kirish",

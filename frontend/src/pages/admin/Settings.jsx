@@ -4,7 +4,7 @@ import { getSettings, updateSettings } from "../../services/settingsService";
 
 const Settings = () => {
   const { t } = useTranslation();
-  const [settings, setSettings] = useState({ storeName: "", pickupAddress: "", phone: "" });
+  const [settings, setSettings] = useState({ storeName: "", pickupAddress: "", phone: "", contactEmail: "" });
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -53,6 +53,11 @@ const Settings = () => {
           <label>
             Telefon
             <input type="text" name="phone" value={settings.phone} onChange={handleChange} />
+          </label>
+
+          <label>
+            Aloqa uchun email (Contact formasi shu manzilga yuboriladi)
+            <input type="email" name="contactEmail" value={settings.contactEmail} onChange={handleChange} placeholder="info@velora.uz" />
           </label>
 
           <button type="submit" className="primary-button">

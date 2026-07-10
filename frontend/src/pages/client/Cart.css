@@ -530,3 +530,36 @@
 .payment-option.active svg {
   color: var(--primary-gold);
 }
+.gateway-selector {
+  margin-top: 0.5rem;
+}
+
+.gateway-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.gateway-chip {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gateway-chip:hover {
+  border-color: var(--primary-gold);
+  color: var(--primary-gold);
+}
+
+.gateway-chip.active {
+  background: var(--primary-gold);
+  border-color: var(--primary-gold);
+  color: var(--primary-dark);
+}

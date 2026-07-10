@@ -21,6 +21,22 @@ import { getSettings } from "../../services/settingsService";
 import { createOrder, createPayment } from "../../services/orderService";
 import "./Cart.css";
 
+// inPAY.uz orqali qo'llab-quvvatlanadigan to'lov usullari.
+// DIQQAT: value qiymatlari inPAY kabinetidagi nomlarga qarab taxmin qilingan —
+// agar biror gateway ishlamasa (Render Logs'da "inPAY xatosi" chiqsa), shu
+// yerdagi value'ni to'g'irlash kifoya.
+const GATEWAYS = [
+  { label: "Click", value: "click" },
+  { label: "Payme", value: "payme" },
+  { label: "Uzcard/Humo", value: "karta" },
+  { label: "Paynet", value: "paynet" },
+  { label: "Uzum", value: "uzum" },
+  { label: "Alif", value: "alif" },
+  { label: "AnorBank", value: "anorbank" },
+  { label: "Visa/MC", value: "visa_mc" },
+  { label: "Plum", value: "plum" },
+];
+
 const Cart = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -31,6 +47,7 @@ const Cart = () => {
   const [customerName, setCustomerName] = useState(user?.name || "");
   const [customerPhone, setCustomerPhone] = useState(user?.phone || "");
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const [gateway, setGateway] = useState("click");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -64,7 +81,7 @@ const Cart = () => {
       });
 
       if (paymentMethod === "card") {
-        const payment = await createPayment(order._id);
+        const payment = await createPayment(order._id, gateway);
         clearCart();
         if (payment.paymentUrl) {
           window.location.href = payment.paymentUrl;
@@ -283,6 +300,24 @@ const Cart = () => {
                 </div>
               </button>
             </div>
+
+            {paymentMethod === "card" && (
+              <div className="gateway-selector">
+                <span className="checkout-field">{t("cart.chooseGateway")}</span>
+                <div className="gateway-chips">
+                  {GATEWAYS.map((g) => (
+                    <button
+                      key={g.value}
+                      type="button"
+                      className={gateway === g.value ? "gateway-chip active" : "gateway-chip"}
+                      onClick={() => setGateway(g.value)}
+                    >
+                      {g.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <button className="pay-button" onClick={handleCheckout} disabled={submitting}>
               {paymentMethod === "card" ? <RiLockLine /> : <RiMapPinLine />}

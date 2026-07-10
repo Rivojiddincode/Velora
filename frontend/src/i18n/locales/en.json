@@ -138,7 +138,8 @@
     "paymentCashDesc": "Payment at the pickup point",
     "secureNote": "Your information is safe and protected",
     "currency": "sum",
-    "errorGeneric": "Something went wrong"
+    "errorGeneric": "Something went wrong",
+    "chooseGateway": "Choose payment gateway"
   },
   "auth": {
     "signin": "Sign In",
