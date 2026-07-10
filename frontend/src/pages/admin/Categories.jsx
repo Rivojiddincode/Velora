@@ -138,7 +138,7 @@ const Categories = () => {
                 {filteredList.length === 0 ? (
                   <tr>
                     <td colSpan={3} style={{ textAlign: "center", padding: "1rem" }}>
-                      {t("admin.noResults") || "Natija topilmadi"}
+                      {t("admin.noResultsFound")}
                     </td>
                   </tr>
                 ) : (

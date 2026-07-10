@@ -161,6 +161,9 @@
   "admin": {
     "dashboard": "Boshqaruv paneli",
     "products": "Mahsulotlar",
+    "product": "Mahsulot",
+    "categories": "Kategoriyalar",
+    "category": "Kategoriya",
     "orders": "Buyurtmalar",
     "users": "Foydalanuvchilar",
     "settings": "Sozlamalar",
@@ -168,7 +171,8 @@
     "edit": "Tahrirlash",
     "delete": "O'chirish",
     "save": "Saqlash",
-    "cancel": "Bekor qilish"
+    "cancel": "Bekor qilish",
+    "noResultsFound": "Mos natija topilmadi"
   },
   "theme": {
     "light": "Yorug'",

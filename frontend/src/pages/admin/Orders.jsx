@@ -72,7 +72,7 @@ const Orders = () => {
               {filteredOrders.length === 0 ? (
                 <tr>
                   <td colSpan={8} style={{ textAlign: "center", padding: "1rem" }}>
-                    {t("admin.noResults") || "Natija topilmadi"}
+                    {t("admin.noResultsFound")}
                   </td>
                 </tr>
               ) : (

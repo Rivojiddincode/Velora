@@ -161,6 +161,9 @@
   "admin": {
     "dashboard": "Dashboard",
     "products": "Products",
+    "product": "Product",
+    "categories": "Categories",
+    "category": "Category",
     "orders": "Orders",
     "users": "Users",
     "settings": "Settings",
@@ -168,7 +171,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "noResultsFound": "No matching results found"
   },
   "theme": {
     "light": "Light",

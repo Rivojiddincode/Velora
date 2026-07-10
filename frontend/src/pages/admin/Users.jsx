@@ -70,7 +70,7 @@ const Users = () => {
                 {filteredUsers.length === 0 ? (
                   <tr>
                     <td colSpan={5} style={{ textAlign: "center", padding: "1rem" }}>
-                      {t("admin.noResults") || "Natija topilmadi"}
+                      {t("admin.noResultsFound")}
                     </td>
                   </tr>
                 ) : (
