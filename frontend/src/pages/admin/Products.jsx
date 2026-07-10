@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import {
   getProducts,
   createProduct,
@@ -26,6 +27,8 @@ const emptyForm = {
 
 const Products = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const search = (searchParams.get("search") || "").trim().toLowerCase();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -112,6 +115,15 @@ const Products = () => {
     await deleteProduct(id);
     load();
   };
+
+  const filteredProducts = useMemo(() => {
+    if (!search) return products;
+    return products.filter((p) =>
+      [p.name, p.category, p.brand, p.sku, p.ageGroup]
+        .filter(Boolean)
+        .some((field) => String(field).toLowerCase().includes(search))
+    );
+  }, [products, search]);
 
   return (
     <div className="admin-page products-page">
@@ -224,7 +236,14 @@ const Products = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {filteredProducts.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} style={{ textAlign: "center", padding: "1rem" }}>
+                      {t("admin.noResults") || "Natija topilmadi"}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredProducts.map((product) => (
                   <tr key={product._id}>
                     <td>
                       <img
@@ -248,7 +267,8 @@ const Products = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
+                  ))
+                )}
               </tbody>
             </table>
           </div>

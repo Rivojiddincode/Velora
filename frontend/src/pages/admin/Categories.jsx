@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { getCategories, createCategory, updateCategory, deleteCategory } from "../../services/categoryService";
 
 const CATEGORY_IMAGES = {
@@ -11,6 +12,8 @@ const CATEGORY_IMAGES = {
 
 const Categories = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const search = (searchParams.get("search") || "").trim().toLowerCase();
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
@@ -85,6 +88,15 @@ const Categories = () => {
     load();
   };
 
+  const filteredList = useMemo(() => {
+    if (!search) return list;
+    return list.filter((c) =>
+      String(c.name || "")
+        .toLowerCase()
+        .includes(search)
+    );
+  }, [list, search]);
+
   return (
     <div className="admin-page categories-page">
       <div className="page-header">
@@ -123,7 +135,14 @@ const Categories = () => {
                 </tr>
               </thead>
               <tbody>
-                {list.map((c) => (
+                {filteredList.length === 0 ? (
+                  <tr>
+                    <td colSpan={3} style={{ textAlign: "center", padding: "1rem" }}>
+                      {t("admin.noResults") || "Natija topilmadi"}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredList.map((c) => (
                   <tr key={c._id}>
                     <td>
                       <img src={getCategoryImage(c.name)} alt={getDisplayLabel(c.name)} style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 8 }} />
@@ -134,7 +153,8 @@ const Categories = () => {
                       <button className="text-button" onClick={() => handleDelete(c._id)}>{t("admin.delete")}</button>
                     </td>
                   </tr>
-                ))}
+                  ))
+                )}
               </tbody>
             </table>
           </div>

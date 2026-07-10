@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { getAllOrders, updateOrderStatus, updatePaymentStatus } from "../../services/orderService";
 
 const STATUSES = ["pending", "processing", "ready", "completed", "cancelled"];
@@ -7,6 +8,8 @@ const PAYMENT_STATUSES = ["pending", "paid", "failed"];
 
 const Orders = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const search = (searchParams.get("search") || "").trim().toLowerCase();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +31,15 @@ const Orders = () => {
     await updatePaymentStatus(id, paymentStatus);
     load();
   };
+
+  const filteredOrders = useMemo(() => {
+    if (!search) return orders;
+    return orders.filter((o) =>
+      [o._id, o.customerName, o.customerPhone, o.user?.name, o.user?.phone, o.status, o.paymentStatus, o.paymentMethod]
+        .filter(Boolean)
+        .some((field) => String(field).toLowerCase().includes(search))
+    );
+  }, [orders, search]);
 
   return (
     <div className="admin-page orders-page">
@@ -57,7 +69,14 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{ textAlign: "center", padding: "1rem" }}>
+                    {t("admin.noResults") || "Natija topilmadi"}
+                  </td>
+                </tr>
+              ) : (
+                filteredOrders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id.slice(-6).toUpperCase()}</td>
                   <td>{order.customerName || order.user?.name}</td>
@@ -90,7 +109,8 @@ const Orders = () => {
                   </td>
                   <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                 </tr>
-              ))}
+                ))
+              )}
             </tbody>
           </table>
         )}

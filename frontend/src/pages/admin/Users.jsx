@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { getUsers, deleteUser, updateUserRole } from "../../services/userService";
 import { useAuth } from "../../context/AuthContext";
 
 const Users = () => {
   const { t } = useTranslation();
   const { user: currentUser } = useAuth();
+  const [searchParams] = useSearchParams();
+  const search = (searchParams.get("search") || "").trim().toLowerCase();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +31,15 @@ const Users = () => {
     await updateUserRole(id, role);
     load();
   };
+
+  const filteredUsers = useMemo(() => {
+    if (!search) return users;
+    return users.filter((u) =>
+      [u.name, u.email, u.phone, u.role]
+        .filter(Boolean)
+        .some((field) => String(field).toLowerCase().includes(search))
+    );
+  }, [users, search]);
 
   return (
     <div className="admin-page users-page">
@@ -55,7 +67,14 @@ const Users = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((u) => (
+                {filteredUsers.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} style={{ textAlign: "center", padding: "1rem" }}>
+                      {t("admin.noResults") || "Natija topilmadi"}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredUsers.map((u) => (
                   <tr key={u._id}>
                     <td>{u.name}</td>
                     <td>{u.email}</td>
@@ -80,7 +99,8 @@ const Users = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
+                  ))
+                )}
               </tbody>
             </table>
           </div>

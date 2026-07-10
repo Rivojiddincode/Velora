@@ -31,12 +31,13 @@ const AdminHeader = ({ onToggleSidebar }) => {
   }, [location.search]);
 
   const doSearch = () => {
-    const base = "/admin/products";
+    const params = new URLSearchParams(location.search);
     if (q && q.trim()) {
-      navigate(`${base}?search=${encodeURIComponent(q.trim())}`);
+      params.set("search", q.trim());
     } else {
-      navigate(base);
+      params.delete("search");
     }
+    navigate({ pathname: location.pathname, search: params.toString() }, { replace: true });
   };
 
   return (
