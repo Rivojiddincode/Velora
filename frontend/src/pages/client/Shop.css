@@ -180,17 +180,16 @@
   }
 
   .product-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.3rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
   }
 
   .add-cart-btn {
-    padding: 0.35rem 0.4rem !important;
+    padding: 0.35rem 0.6rem !important;
     font-size: 0.65rem;
-    justify-content: center;
-    width: 100%;
-    white-space: normal;
+    white-space: nowrap;
     gap: 0.2rem;
   }
 
@@ -201,7 +200,7 @@
 
   .product-actions .price {
     font-size: 0.8rem;
-    text-align: center;
+    text-align: left;
   }
 }
 
