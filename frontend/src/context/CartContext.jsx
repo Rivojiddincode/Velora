@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "./AuthContext";
 import { useToast } from "./ToastContext";
 
 const CartContext = createContext(null);
@@ -7,6 +9,8 @@ const CartContext = createContext(null);
 export const CartProvider = ({ children }) => {
   const { t } = useTranslation();
   const { showToast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [items, setItems] = useState(() => {
     const saved = localStorage.getItem("cart");
@@ -18,6 +22,10 @@ export const CartProvider = ({ children }) => {
   }, [items]);
 
   const addToCart = (product, quantity = 1) => {
+    if (!user) {
+      navigate("/signin");
+      return;
+    }
     setItems((prev) => {
       const existing = prev.find((i) => i._id === product._id);
       if (existing) {
