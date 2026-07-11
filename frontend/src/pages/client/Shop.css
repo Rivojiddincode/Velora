@@ -151,57 +151,6 @@
     grid-template-columns: 1fr;
     gap: 0.5rem;
   }
-
-  .product-card-body {
-    padding: 0.5rem;
-  }
-
-  .product-card-body h3 {
-    font-size: 0.8rem;
-  }
-
-  .card-rating {
-    font-size: 0.7rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .card-rating svg {
-    font-size: 0.8rem;
-  }
-
-  .new-badge {
-    font-size: 0.6rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .product-category {
-    font-size: 0.7rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .product-actions {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.5rem;
-  }
-
-  .add-cart-btn {
-    padding: 0.35rem 0.6rem !important;
-    font-size: 0.65rem;
-    white-space: nowrap;
-    gap: 0.2rem;
-  }
-
-  .add-cart-btn svg {
-    font-size: 0.8rem;
-    flex-shrink: 0;
-  }
-
-  .product-actions .price {
-    font-size: 0.8rem;
-    text-align: left;
-  }
 }
 
 /* Sidebar */
