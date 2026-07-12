@@ -326,7 +326,7 @@ const Shop = () => {
                       }
                       disabled={product.stock === 0}
                     >
-                      <RiShoppingCart2Line /> {t("shop.addToCart")}
+                      <RiShoppingCart2Line />
                     </button>
                   </div>
                 </div>

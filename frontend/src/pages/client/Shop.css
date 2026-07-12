@@ -447,16 +447,24 @@
 .add-cart-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.5rem 1.5rem!important;
-  border-radius: 10px;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
   background: transparent;
   border: 1px solid var(--primary-gold);
   color: var(--primary-gold);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
   cursor: pointer;
-  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.add-cart-btn svg {
+  font-size: 1rem;
 }
 
 .add-cart-btn:hover {
